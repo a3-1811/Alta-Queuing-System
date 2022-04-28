@@ -1,0 +1,21 @@
+.text-field {
+  font-family: 'Open Sans', sans-serif;
+  label {
+    display: inline-block;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 8px;
+    color: black;
+  }
+  input {
+    padding: 10px 0;
+    display: block;
+    width: 100%;
+    color: #999;
+    font-size: 14px;
+    border-bottom: 1px solid #4680ff;
+    background-color: transparent;
+    color: black;
+  }
+}
