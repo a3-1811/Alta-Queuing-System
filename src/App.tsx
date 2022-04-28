@@ -6,7 +6,7 @@ import { privateRoutes,publicRoutes } from "./routes/routes";
 function App() {
   const routingPrivate = useRoutes(privateRoutes)
   const routingPublic = useRoutes(publicRoutes)
-
+  
   return (
     <div className="App">
       {routingPrivate}
