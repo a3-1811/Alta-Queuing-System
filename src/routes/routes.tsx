@@ -7,22 +7,22 @@ import Dashboard from "../pages/CMS/Dashboard";
 
 export const publicRoutes : RouteObject[] = [
     {
-        path : '/',
+        path : '/dasda',
         element : <PublicRoute><h2>ưqd</h2></PublicRoute>
     },
     {
         path : '/login',
         element : <PublicRoute><h2>ưqd</h2></PublicRoute>
     },
-    {
-        path : '*',
-        element : <PublicRoute><h2>404 Page</h2></PublicRoute>
-    },
+    // {
+    //     path : '*',
+    //     element : <PublicRoute><h2>404 Page</h2></PublicRoute>
+    // },
 ]
 
 export const privateRoutes : RouteObject[] = [
     {
-        path : '/dashboard',
+        path : '/',
         element : <PrivateRoute><Dashboard/></PrivateRoute>
     },
 ]
