@@ -11,11 +11,9 @@ const PrivateTemplate = (props: Props) => {
       {/* Navbar */}
       <nav className="dashboard bg-transparent border-gray-200 sm:px-4 py-2.5 z-10 w-[200px] h-full">
           <div className="left-nav w-full h-full flex flex-col items-center">
-            <div className="logo flex justify-center items-center h-[100px] w-full">
-              <Link to="/" className="flex items-center">
-                <span className="self-center text-2xl font-bold whitespace-nowrap text-black">
-                  CWZ
-                </span>
+            <div className="logo flex justify-center items-center h-[100px] w-full ">
+              <Link to="/" className="flex items-center h-1/3 w-1/3 object-cover">
+                <img src="./images/Logo_alta.png" alt="" />
               </Link>
             </div>
             <ul className="flex flex-col items-center w-full h-full">
@@ -26,32 +24,32 @@ const PrivateTemplate = (props: Props) => {
                 </NavLink>
                 <NavLink className="block w-full" to="/manager-chanllenge" >
               <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary">
-              <i className="fab fa-pied-piper-hat mr-[8px]"></i>Challenge
+              <i className="fa fa-desktop mr-[8px]"></i>Thiết bị
               </li>
                 </NavLink>
                 <NavLink className="block w-full" to="/manager-difficult" >
-              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary">
-              <i className="fab fa-optin-monster mr-[8px]"></i>Diffcult
+              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary flex gap-x-1">
+              <div className="h-[20px] w-[20px]"><img src="./images/svgs/icon-group.svg" alt="" /></div>Dịch vụ
               </li>
                 </NavLink>
                 <NavLink className="block w-full" to="/manager-notification" >
-              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary">
-              <i className="fa fa-bullhorn mr-[8px]"></i>Notification
+              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary flex gap-x-1">
+              <div className="h-[20px] w-[20px]"><img src="./images/svgs/icon-layers.svg" alt="" /></div>Cấp số
               </li>
                 </NavLink>
                 <NavLink className="block w-full"  to="/manager-user" >
-              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary">
-              <i className="fa fa-users-cog mr-[8px]"></i>User
+              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary flex gap-x-1">
+              <div className="h-[20px] w-[20px]"><img src="./images/svgs/icon-frame.svg" alt="" /></div>Báo cáo
               </li>
                 </NavLink>
                 <NavLink className="block w-full" to="/statistic" >
-              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary">
-              <i className="fa fa-atlas  mr-[8px]"></i>Statistic
+              <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary flex gap-x-1">
+              <div className="h-[20px] w-[20px]"><img src="./images/svgs/icon-setting.svg" alt="" /></div>cài đặt hệ thống
               </li>
                 </NavLink>
-              <button className="block text-left w-full mt-auto" >
-                <li className="px-[17px] py-[10px] text-sm font-medium text-gray-500 hover:text-white hover:bg-primary">
-                <i className="fa fa-sign-out-alt mr-[8px]"></i>Logout
+              <button className="block text-left w-full mt-auto bg-primary bg-opacity-10 " >
+                <li className="px-[17px] py-[10px] text-sm font-medium text-primary hover:text-white hover:bg-primary">
+                <i className="fa fa-sign-out-alt mr-[8px] text-primary"></i>Đăng xuất
                 </li>
               </button>
             </ul>

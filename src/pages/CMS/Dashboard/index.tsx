@@ -1,6 +1,8 @@
 import React from "react";
 import "./style.scss";
+import { ArrowDownOutlined, ArrowUpOutlined, CalendarOutlined, CaretDownOutlined, CarryOutOutlined } from "@ant-design/icons";
 import { Line } from "react-chartjs-2";
+import { Select } from "antd";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -99,57 +101,60 @@ const options = {
     ],
   },
 };
+const { Option } = Select;
 
 function Dashboard() {
   return (
     <div className="flex w-full">
     <div className="pt-5 dashboard__main w-2/3">
-      <h2 className="mb-6 text-primary font-semibold text-2xl">Dashboard</h2>
+      <h2 className="mb-6 text-primary font-semibold text-lg">Dashboard</h2>
+      <h2 className="mb-6 text-primary font-bold text-xl">Biểu đồ cấp số</h2>
       <div className="content w-full">
-        <div className="list flex items-center justify-between w-full gap-x-1 gap-y-1 flex-wrap">
+        <div className="list flex items-center justify-between w-full gap-x-1 gap-y-1 ">
           <div className="item flex flex-col items-start gap-y-1 px-3 py-2 rounded-xl">
             <div className="header flex items-center gap-x-3">
+              <div className="iconBox h-10 w-10 flex items-center justify-center bg-[#6695FB] rounded-full bg-opacity-10">
+                <CalendarOutlined className="text-[#6695FB] text-xl"/>
+              </div>
+              <div className="limit-2 font-bold text-xs w-[90px]">
+              Số thứ tự đã cấp
+              </div>
+            </div>
+            <div className="flex items-center justify-between w-full"><span className="font-bold text-3xl text-gray-600">4.221</span> <span className="flex items-center text-[10px] bg-primary bg-opacity-10  rounded-xl text-bold text-primary px-1 py-1"><ArrowUpOutlined /> 32,41%</span></div>
+          </div>
+          <div className="item flex flex-col items-start gap-y-1 px-3 py-2  rounded-xl">
+            <div className="header flex items-center gap-x-3">
+              <div className="iconBox h-10 w-10 flex items-center justify-center bg-[#35C75A] rounded-full bg-opacity-10">
+              <CarryOutOutlined className="text-[#35C75A] text-xl"/>
+              </div>
+              <div className="limit-2 font-bold text-xs w-[90px]">
+              Số thứ tự đã sử dụng
+              </div>
+            </div>
+            <div className="flex items-center justify-between w-full"><span className="font-bold text-3xl text-gray-600">32</span> <span className="flex items-center text-[10px] bg-red-500 bg-opacity-10  rounded-xl text-bold text-red-500 px-1 py-1"><ArrowDownOutlined /> 32,41%</span></div>
+          
+          </div>
+          <div className="item flex flex-col items-start gap-y-1 px-3 py-2  rounded-xl">
+            <div className="header flex items-center gap-x-3">
               <div className="iconBox h-10 w-10 flex items-center justify-center bg-primary rounded-full bg-opacity-10">
-                <i className="fa fa-carrot text-primary text-xl"></i>
+                <img src="./images/svgs/icon-user-phone.svg" alt="svg" />
               </div>
               <div className="limit-2 font-bold text-xs w-[90px]">
-                Number chanllenges
+              Số thứ tự đang chờ
               </div>
             </div>
-            <div className="font-bold text-3xl text-gray-600">390</div>
+            <div className="flex items-center justify-between w-full"><span className="font-bold text-3xl text-gray-600">32</span> <span className="flex items-center text-[10px] bg-red-500 bg-opacity-10  rounded-xl text-bold text-red-500 px-1 py-1"><ArrowDownOutlined /> 32,41%</span></div>
           </div>
           <div className="item flex flex-col items-start gap-y-1 px-3 py-2  rounded-xl">
             <div className="header flex items-center gap-x-3">
-              <div className="iconBox h-10 w-10 flex items-center justify-center bg-[#FFAC6A] rounded-full bg-opacity-10">
-                <i className="fa fa-language text-[#FFAC6A] text-xl"></i>
+              <div className="iconBox h-10 w-10 flex items-center justify-center bg-red-500 rounded-full bg-opacity-10">
+              <img src="./images/svgs/icon-book-mark.svg" alt="svg" />
               </div>
               <div className="limit-2 font-bold text-xs w-[90px]">
-                Number languages
+              Số thứ tự đã bỏ qua
               </div>
             </div>
-            <div className="font-bold text-3xl text-gray-600">390</div>
-          </div>
-          <div className="item flex flex-col items-start gap-y-1 px-3 py-2  rounded-xl">
-            <div className="header flex items-center gap-x-3">
-              <div className="iconBox h-10 w-10 flex items-center justify-center bg-green rounded-full bg-opacity-10">
-                <i className="fa fa-user-astronaut text-green text-xl"></i>
-              </div>
-              <div className="limit-2 font-bold text-xs w-[90px]">
-                Number users
-              </div>
-            </div>
-            <div className="font-bold text-3xl text-gray-600">390</div>
-          </div>
-          <div className="item flex flex-col items-start gap-y-1 px-3 py-2  rounded-xl">
-            <div className="header flex items-center gap-x-3">
-              <div className="iconBox h-10 w-10 flex items-center justify-center bg-red-600 rounded-full bg-opacity-10">
-                <i className="fab fa-canadian-maple-leaf text-red-600 text-xl"></i>
-              </div>
-              <div className="limit-2 font-bold text-xs w-[90px]">
-                Number diffcults
-              </div>
-            </div>
-            <div className="font-bold text-3xl text-gray-600">390</div>
+            <div className="flex items-center justify-between w-full"><span className="font-bold text-3xl text-gray-600">32</span> <span className="flex items-center text-[10px] bg-primary bg-opacity-10  rounded-xl text-bold text-primary px-1 py-1"><ArrowUpOutlined /> 32,41%</span></div>
           </div>
         </div>
         <div className="chart w-full mt-5 h-full p-[15px]">
@@ -157,10 +162,19 @@ function Dashboard() {
             <h3 className="font-bold text-sm">Statistical table</h3>
             <div className="selectBox flex justify-center items-center gap-x-3">
               <span className="font-bold text-sm">View by</span>
-              <select className="rounded-2xl cursor-pointer focus:outline-none w-[100px] outline-none border-gray-200 border-1 px-[12px] py-[5px] text-gray-500">
+              <Select
+              defaultValue={"Day"}
+              className="text-gray-500"
+              suffixIcon={<CaretDownOutlined className="text-primary" />}
+            >
+              <Option value="Day">Day</Option>
+              <Option value="Week">Week</Option>
+              <Option value="Year">Year</Option>
+            </Select>
+              {/* <select className="rounded-2xl cursor-pointer focus:outline-none w-[100px] outline-none border-gray-200 border-1 px-[12px] py-[5px] ">
                 <option value="day">Day</option>
                 <option value="month">Month</option>
-              </select>
+              </select> */}
             </div>
           </div>
           {/* Chart  */}
