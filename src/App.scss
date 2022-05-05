@@ -158,6 +158,12 @@ h6 {
   color: #fff;
 }
 
-.dashboard .main__content{
-  background: #B1B1B1;
+.dashboard .main__content {
+  background: #b1b1b1;
+}
+
+.shadow-dashboard-content{
+  box-shadow: 2px 2px 8px rgba(232, 239, 244, 0.8);
+  border-radius: 16px;
+  background: #fff;
 }
