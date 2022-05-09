@@ -82,7 +82,7 @@ const [table, setTable] = useState({
   }
 
   return (
-    <div className="content pl-[24px] pt-[29px] pr-[100px] relative">
+    <div className="services content pl-[24px] pt-[29px] pr-[100px] relative">
       <div className="path text-gray-600 font-bold text-lg mb-11">
         Dịch vụ &gt;{" "}
         <span className="text-primary font-bold">Danh sách dịch vụ</span>

@@ -14,7 +14,7 @@ const AddDevice = () => {
     children.push(<Option key={i}>{deciceList[i]}</Option>);
   }
   return (
-    <div className='content pl-[24px] pt-[29px] pr-[100px] relative'>
+    <div className='add-device content pl-[24px] pt-[29px] pr-[100px] relative'>
       <div className='path text-primary-gray-light-400 font-bold text-xl leading-[30px] mb-4'>
         Thiết bị &gt; Danh sách thiết bị &gt;{' '}
         <span className='text-primary-500 text-xl leading-[30px] font-bold'>
@@ -23,9 +23,9 @@ const AddDevice = () => {
       </div>
       <h2 className='text-primary-500 text-2xl font-bold'>Quản lý thiết bị</h2>
       <div className='py-2 px-6 rounded-2xl shadow-[2px_2px_8px_rgba(232, 239, 244, 0.8)]'>
-        {/* <h3 className='text-xl font-bold leading-[30px] text-primary'>
+        <h3 className='text-xl font-bold leading-[30px] text-primary'>
           Thông tin thiết bị
-        </h3> */}
+        </h3>
         <Form className=''>
           <Row gutter={{ lg: 32 }}>
             <Col span={12}>

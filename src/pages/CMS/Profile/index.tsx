@@ -16,12 +16,12 @@ const Profile = () => {
   };
   useEffect(() => {
     form.setFieldsValue({
-      username: 'Dương Quốc Nam',
-      phoneNumber: '0779382202',
-      email: 'duongquocnam224400@gmail.com',
-      loginName: 'DQNam2202',
-      password: '312220200',
-      role: 'Dev',
+      username: 'Lê Quỳnh Ái Vân',
+      phoneNumber: '0767375921',
+      email: 'adminSS01@gmail.com',
+      loginName: 'lequynhaivan01',
+      password: '311940211',
+      role: 'Kế toán',
     });
   }, []);
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
@@ -45,12 +45,12 @@ const Profile = () => {
                 <div className='w-[248px] h-[248px] text-center'>
                   <img
                     className='w-full h-full object-cover rounded-[318px]'
-                    src='https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg'
+                    src='https://i.pinimg.com/236x/57/dc/75/57dc75dde00479a9668945fa251ba92b.jpg'
                     alt='avatar'
                   />
                 </div>
                 <h2 className='mt-5 text-center text-2xl font-bold leading-9 text-primary-gray-500'>
-                  Dương Quốc Nam
+                  Lê Quỳnh Ái Vân
                 </h2>
                 <div className='absolute w-11 h-11 bg-primary border-2 border-solid border-white flex justify-center items-center rounded-full top-52 left-48 cursor-pointer'>
                   <Form.Item
@@ -71,21 +71,21 @@ const Profile = () => {
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='username'
               >
-                <Input placeholder='username' />
+                <Input placeholder='username'  disabled/>
               </Form.Item>
               <Form.Item
                 label='Số điện thoại'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='phoneNumber'
               >
-                <Input placeholder='0779382202' />
+                <Input placeholder='0779382202'  disabled/>
               </Form.Item>
               <Form.Item
                 label='Email'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='email'
               >
-                <Input placeholder='example@gmail.com' />
+                <Input placeholder='example@gmail.com'  disabled/>
               </Form.Item>
             </Col>
             <Col span={8}>
@@ -94,21 +94,21 @@ const Profile = () => {
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='loginName'
               >
-                <Input placeholder='duongnam2202' />
+                <Input placeholder='ádads' disabled />
               </Form.Item>
               <Form.Item
                 label='Mật khẩu'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='password'
               >
-                <Input placeholder='32127189' className='' />
+                <Input placeholder='32127189' className=''  disabled/>
               </Form.Item>
               <Form.Item
                 label='Vai trò'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='role'
               >
-                <Input placeholder='Tester' />
+                <Input placeholder='Tester'  disabled/>
               </Form.Item>
             </Col>
           </Row>

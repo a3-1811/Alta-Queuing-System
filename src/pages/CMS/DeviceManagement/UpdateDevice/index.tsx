@@ -52,7 +52,7 @@ const UpdateDevice = () => {
     });
   }, []);
   return (
-    <div className='content pl-[24px] pt-[29px] pr-[100px] relative'>
+    <div className='update-device content pl-[24px] pt-[29px] pr-[100px] relative'>
       <div className='path text-primary-gray-light-400 font-bold text-xl leading-[30px] mb-4'>
         Thiết bị &gt; Danh sách thiết bị &gt;{' '}
         <span className='text-primary-500 text-xl leading-[30px] font-bold'>
@@ -210,7 +210,7 @@ const UpdateDevice = () => {
               type='submit'
               className='w-[160px] text-white px-6 py-[13px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 leading-[22px]'
             >
-              Thêm thiết bị
+              Cập nhật
             </button>
           </div>
         </Form>
