@@ -32,6 +32,7 @@ import AddProgression from "../pages/CMS/ProgressionManager/AddProgression";
 import DetailProgression from "../pages/CMS/ProgressionManager/DetailProgression";
 // Profile
 import Profile from '../pages/CMS/Profile';
+import ReportManager from "../pages/CMS/ReportManagement";
 
 export const routes: RouteObject[] = [
   {
@@ -215,6 +216,14 @@ export const routes: RouteObject[] = [
     element: (
       <PrivateRoute>
         <DetailProgression />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/reports-management',
+    element: (
+      <PrivateRoute>
+        <ReportManager />
       </PrivateRoute>
     ),
   },
