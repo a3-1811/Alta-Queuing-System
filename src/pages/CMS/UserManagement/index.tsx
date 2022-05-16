@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Input, Select } from 'antd';
+import { Input, Select } from 'antd';
 import { Table } from 'antd';
-import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
-import './style.scss';
+import { CaretDownOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import './style.scss';
 type Props = {};
 
 const columns = [
   {
-    title: 'Mã dịch vụ',
-    dataIndex: 'maDv',
+    title: 'Tên đăng nhập',
+    dataIndex: 'tenDangNhap',
+    width: '10%',
+  },
+  {
+    title: 'Họ tên',
+    dataIndex: 'hoTen',
+    width: '15%',
+  },
+  {
+    title: 'Số điện thoại',
+    dataIndex: 'soDienThoai',
+    width: '14%',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
     width: '20%',
   },
   {
-    title: 'Tên dịch vụ',
-    dataIndex: 'tenDv',
-    width: '20%',
-  },
-  {
-    title: 'Mô tả',
-    dataIndex: 'moTa',
-    width: '20%',
+    title: 'Vai trò',
+    dataIndex: 'vaiTro',
+    width: '10%',
   },
   {
     title: 'Trạng thái hoạt động',
@@ -44,19 +54,7 @@ const columns = [
     render: (item: any, record: any) => (
       <Link
         className='text-blue-500 underline'
-        to={`/services-management/detail/${record.maDv}`}
-      >
-        Chi tiết
-      </Link>
-    ),
-  },
-  {
-    title: '',
-    dataIndex: 'action2',
-    render: (item: any, record: any) => (
-      <Link
-        className='text-blue-500 underline'
-        to={`/services-management/update/${record.maDv}`}
+        to={`/user-management/update/${record.tenDangNhap}`}
       >
         Cập nhật
       </Link>
@@ -64,7 +62,7 @@ const columns = [
   },
 ];
 
-const ServiceManager = (props: Props) => {
+const UserManager = (props: Props) => {
   const [table, setTable] = useState({
     data: [],
     pagination: {
@@ -86,14 +84,15 @@ const ServiceManager = (props: Props) => {
     for (let index = 0; index < 50; index++) {
       let temp = {
         key: index,
-        maDv: `KIO_0${index}`,
-        tenDv: `Kiosk ${index}`,
-        moTa: `Mô tả ${index}`,
+        tenDangNhap: `tuyetnguyen@2${index}`,
+        hoTen: `Nguyễn Văn ${(index + 9).toString(36).toUpperCase()}`,
+        soDienThoai: '0919256712',
+        email: `tuyetnguyen12${index}@gmail.com`,
+        vaiTro: 'Kế toán',
         trangThai: index % 2 === 0 ? true : false,
       };
       data.push(temp);
     }
-
     setTable({ ...table, data: data as any });
   }, []);
 
@@ -102,16 +101,20 @@ const ServiceManager = (props: Props) => {
   };
 
   return (
-    <div className='content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 relative service'>
+    <div className='content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 md:mt-3 relative user'>
       <div className='path text-gray-600 font-bold text-lg mb-11'>
-        Dịch vụ &gt;{' '}
-        <span className='text-primary font-bold'>Danh sách dịch vụ</span>
+        Cài đặt hệ thống &gt;{' '}
+        <span className='text-primary font-bold'>Quản lý tài khoản</span>
       </div>
-      <h2 className='text-primary text-2xl font-bold mb-4'>Quản lý dịch vụ</h2>
-      <div className='controls flex justify-between md:flex-col'>
-        <div className='flex gap-x-2 xl:flex-col '>
-          <div className='item flex flex-col text-sm'>
-            <span className='font-semibold'>Trạng thái hoạt động</span>
+      <h2 className='text-primary text-2xl font-bold mb-4'>
+        Danh sách tài khoản
+      </h2>
+      <div className='controls flex justify-between md:flex-col md:items-center'>
+        <div className='flex gap-x-2'>
+          <div className='item flex flex-col text-sm md:items-center'>
+            <span className='font-semibold mb-1 text-primary-gray-500'>
+              Tên vai trò
+            </span>
             <Select
               suffixIcon={<CaretDownOutlined />}
               onChange={handleChange}
@@ -119,29 +122,16 @@ const ServiceManager = (props: Props) => {
               className='w-[300px] h-11 text-primary-gray-400'
             >
               <Option value='all'>Tất cả</Option>
-              <Option value='online'>Hoạt động</Option>
-              <Option value='offline'>Ngưng hoạt động</Option>
+              <Option value='keToan'>Kế toán</Option>
+              <Option value='manager'>Quản lý</Option>
+              <Option value='admin'>Admin</Option>
             </Select>
           </div>
-          <div className='item flex flex-col text-sm xl:mt-2'>
-            <span className='font-semibold'>Chọn thời gian</span>
-            <div className='date-controls'>
-              <DatePicker
-                onChange={handleDateChange}
-                className='rounded-lg w-[150px] h-11 text-primary-gray-400'
-                format={'DD/MM/YYYY'}
-              />
-              <CaretRightOutlined className='' />
-              <DatePicker
-                onChange={handleDateChange}
-                className='rounded-lg w-[150px] h-11 text-primary-gray-400'
-                format={'DD/MM/YYYY'}
-              />
-            </div>
-          </div>
         </div>
-        <div className='item flex flex-col text-sm'>
-          <span className='font-semibold'>Từ khoá</span>
+        <div className='item flex flex-col text-base md:items-center mt-2'>
+          <span className='font-semibold mb-1 text-primary-gray-500'>
+            Từ khoá
+          </span>
           <Input.Search
             placeholder='Nhập từ khóa'
             onSearch={value => console.log(value)}
@@ -149,9 +139,9 @@ const ServiceManager = (props: Props) => {
           />
         </div>
       </div>
-      <div className='relative flex-col'>
+      <div className='relative md:overflow-y-scroll md:max-h-[60vh]'>
         <Table
-          className='mt-4'
+          className='mt-4 overflow-x-scroll'
           columns={columns}
           dataSource={table.data}
           pagination={{ ...table.pagination, onChange: handlePanigationChange }}
@@ -159,15 +149,17 @@ const ServiceManager = (props: Props) => {
         />
         {/* Add button */}
         <Link
-          to='/services-management/add'
-          className='lg:relative lg:w-full lg:top-auto lg:right-auto absolute -right-28 top-0 flex flex-col h-[94px] w-20 justify-center items-center text-center bg-primary-50 text-primary font-bold cursor-pointer hover:text-primary'
+          to='/user-management/add'
+          className='lg:relative lg:top-auto lg:right-auto lg:w-full absolute -right-28 px-3 py-1 top-0 flex flex-col h-[94px] w-24 justify-center items-center text-center bg-primary-50 text-primary cursor-pointer hover:text-primary'
         >
           <i className='fa fa-plus-square text-xl'></i>
-          <span className='text-sm'>Thêm dịch vụ</span>
+          <span className='font-semibold text-sm leading-[19px]'>
+            Thêm tài khoản
+          </span>
         </Link>
       </div>
     </div>
   );
 };
 
-export default ServiceManager;
+export default UserManager;

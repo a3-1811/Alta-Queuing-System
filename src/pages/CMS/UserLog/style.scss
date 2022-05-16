@@ -1,4 +1,4 @@
-.device {
+.user-log {
   .controls {
     .item {
       .ant-select-selector {
@@ -6,8 +6,20 @@
       }
     }
   }
-  .ant-select-arrow .anticon:not(.ant-select-suffix) {
-    color: #ff7506;
+  // Custom
+  .ant-picker {
+    &-suffix {
+      content: url('../../../../src/assets/calendar.svg');
+    }
+    &-input {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 10px;
+      input {
+        width: 60%;
+        margin-left: auto;
+      }
+    }
   }
   .ant-input-search .ant-input {
     &:hover {
@@ -44,21 +56,6 @@
       color: #fff !important;
     }
   }
-  // Custom
-  .ant-picker {
-    &-suffix {
-      content: url('../../../../src/assets/calendar.svg');
-    }
-    &-input {
-      display: flex;
-      flex-direction: row-reverse;
-      gap: 10px;
-      input {
-        width: 60%;
-        margin-left: auto;
-      }
-    }
-  }
   .ant-input {
     &-search {
       input {
@@ -67,9 +64,7 @@
       }
     }
     &-group-addon {
-      height: 100%;
       button {
-        height: 100%;
         border-left: 0;
         background: #fff;
         border-bottom-right-radius: 0.5rem !important;
@@ -80,9 +75,6 @@
         }
       }
     }
-  }
-  .ant-spin-container{
-    overflow-x: scroll;
   }
   .ant-table-content {
     thead {
@@ -107,21 +99,10 @@
           background: #fff2e7;
         }
         td {
-          padding: 12px 16px;
+          padding: 14px 17px;
           border-right: 1px solid #ffe3cd;
         }
       }
-    }
-  }
-  .controls .item .ant-select-selector {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .ant-input-group {
-    height: 100%;
-    .ant-input {
-      height: 100%;
     }
   }
 }

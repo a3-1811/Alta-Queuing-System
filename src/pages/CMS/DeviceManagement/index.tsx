@@ -64,7 +64,7 @@ const columns = [
       let item = dichVuSuDung.join(',');
       return (
         <div>
-          <span className='limit-1'>{item}</span>
+          <span className='limit-1 w-16'>{item}</span>
           <strong className='underline text-primary-blue cursor-pointer'>
             Xem thêm
           </strong>
@@ -103,7 +103,7 @@ const DeviceManager = (props: Props) => {
     data: [],
     pagination: {
       current: 1,
-      pageSize: 4,
+      pageSize: 9,
     },
     loading: false,
   });
@@ -143,7 +143,7 @@ const DeviceManager = (props: Props) => {
   };
 
   return (
-    <div className='content pl-[24px] pt-[29px] pr-[100px] relative device'>
+    <div className='content pl-[24px] pt-[29px] pr-[100px] relative device lg:pr-1'>
       <div className='path text-primary-gray-light-400 font-bold text-xl leading-[30px] mb-11'>
         Thiết bị &gt;{' '}
         <span className='text-primary-500 text-xl leading-[30px] font-bold'>
@@ -153,8 +153,8 @@ const DeviceManager = (props: Props) => {
       <h2 className='text-primary-500 text-2xl font-bold mb-4'>
         Quản lý thiết bị
       </h2>
-      <div className='controls flex justify-between'>
-        <div className='flex gap-x-6'>
+      <div className='controls flex justify-between lg:flex-col lg:gap-y-3 md:justify-center md:items-center'>
+        <div className='flex gap-x-6  md:flex-col'>
           <div className='item flex flex-col text-base'>
             <span className='font-semibold mb-1 text-primary-gray-500'>
               Trạng thái hoạt động
@@ -197,7 +197,7 @@ const DeviceManager = (props: Props) => {
           />
         </div>
       </div>
-      <div className='relative'>
+      <div className='relative xl:flex xl:flex-col'>
         <Table
           className='mt-4'
           columns={columns}
@@ -208,7 +208,7 @@ const DeviceManager = (props: Props) => {
         {/* Add button */}
         <Link
           to='/devices-management/add'
-          className='absolute -right-28 top-0 flex flex-col h-[94px] w-20 justify-center items-center text-center bg-primary-50 text-primary cursor-pointer hover:text-primary'
+          className='xl:relative xl:right-auto xl:top-auto xl:w-full absolute -right-28 top-0 flex flex-col h-[94px] w-20 justify-center items-center text-center bg-primary-50 text-primary cursor-pointer hover:text-primary'
         >
           <i className='fa fa-plus-square text-xl'></i>
           <span className='font-semibold text-sm leading-[19px]'>

@@ -1,8 +1,4 @@
-.add-device{
-  box-shadow: 2px 2px 8px rgba(232, 239, 244, 0.8);
-  background: #fff;
-  padding: 12px 24px;
-  border-radius: 16px;
+.user-add {
   .ant-form-item {
     display: flex;
     flex-direction: column;
@@ -22,5 +18,7 @@
     .ant-select-selector {
     height: 100%;
   }
+  .ant-select-arrow .anticon:not(.ant-select-suffix) {
+    color: #ff7506;
+  }
 }
-

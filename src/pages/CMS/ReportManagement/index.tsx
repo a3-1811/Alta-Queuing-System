@@ -67,7 +67,7 @@ const renderDropdownSelectWithCheckbox = (title : string,data : Array<any>)=>{
     defaultValue={'Tất cả'}
     className='absolute top-0 left-0 w-full h-14 text-primary-gray-400 opacity-0'
   >
-    {data && data.map((item,index)=><Option key={index} value={item.text}><span className='flex items-center p-x-1'><span>{item.text}</span><input type="checkbox" className={ index !=0 ?` outline-primary-blue-300 outline-2 outline block ml-auto rounded-sm mr-1` : " hidden ml-auto rounded-sm mr-1"} /></span></Option>)}
+    {data && data.map((item,index)=><Option key={index} value={item.text}><span className='flex items-center p-x-1'><span>{item.text}</span><input type="checkbox" className={ index !=0 ?`outline-primary-blue-300 outline-2 outline block ml-auto rounded-sm mr-1` : " hidden ml-auto rounded-sm mr-1"} /></span></Option>)}
   </Select>
     </div>
   )

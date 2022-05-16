@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./src/**/*.{html,js,ts,tsx}'],
+  content: ['./src/**/*.{html,js,ts,tsx}',"./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
       boxShadow: {
@@ -52,5 +52,5 @@ module.exports = {
       // => @media (max-width: 639px) { ... }
     },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 };

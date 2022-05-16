@@ -1,10 +1,18 @@
-.services{
+.service {
   .controls {
     .item {
       .ant-select-selector {
         border: 1px solid #d4d4d7 !important;
+        height: 44px;
+        align-items: center;
+      }
+      input{
+        height: 44px;
       }
     }
+  }
+  .ant-select-arrow .anticon:not(.ant-select-suffix) {
+    color: #ff7506;
   }
   // Custom
   .ant-picker {
@@ -21,6 +29,41 @@
       }
     }
   }
+  .ant-input-search .ant-input {
+    &:hover {
+      border-color: #ff7506 !important;
+    }
+    &:focus {
+      border-color: #ff7506 !important;
+    }
+  }
+  .ant-btn {
+    &:hover {
+      border-color: #ff7506 !important;
+    }
+    &:focus {
+      border-color: #ff7506 !important;
+    }
+  }
+  .ant-pagination-item:hover {
+    border-color: #ff7506 !important;
+    background: #ff7506;
+    > a {
+      color: #fff !important;
+    }
+  }
+  .ant-pagination-item-active {
+    font-weight: 500;
+    background: #ff7506;
+    border-color: #ff7506 !important;
+    > a {
+      color: #fff !important;
+    }
+    &:hover {
+      border-color: #ff7506 !important;
+      color: #fff !important;
+    }
+  }
   .ant-input {
     &-search {
       input {
@@ -30,6 +73,7 @@
     }
     &-group-addon {
       button {
+        height: 44px;
         border-left: 0;
         background: #fff;
         border-bottom-right-radius: 0.5rem !important;
@@ -70,5 +114,4 @@
       }
     }
   }
-  
 }

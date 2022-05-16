@@ -8,7 +8,7 @@ const Page404 = () => {
           Oops! Page not found.
         </h2>
         <div className=''>
-          <img src='./images/404.svg' alt='logo_404' />
+          <img src='/images/404.svg' alt='logo_404' />
         </div>
         <h4 className='mt-10 mb-3 text-xl font-medium'>
           We can't find the page you're looking for

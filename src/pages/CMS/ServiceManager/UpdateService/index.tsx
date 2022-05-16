@@ -152,7 +152,7 @@ const AddService = (props: Props) => {
     }
   }
   return (
-    <div className="content pl-[24px] pt-[29px] pr-[100px] relative">
+    <div className="update-service content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 md:pt-10 relative">
       <div className="path text-gray-600 font-bold text-lg mb-11">
         Dịch vụ &gt; Danh sách dịch vụ &gt;{" "}
         <span className="text-primary font-bold">Cập nhật</span>
@@ -170,7 +170,7 @@ const AddService = (props: Props) => {
           onChange={handleFormChange}
         >
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col span={12} xs={24} xl={12}>
               <Form.Item
                 name={["dichvu", "maDv"]}
                 label="Mã dịch vụ:"
@@ -196,7 +196,7 @@ const AddService = (props: Props) => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={12} xs={24} xl={12}>
               <Form.Item
                 name={["dichvu", "moTa"]}
                 label="Mô tả:"
@@ -296,7 +296,7 @@ const AddService = (props: Props) => {
             <span className="text-primary">*</span> là trường thông tin bắt buộc
           </span>
           <Form.Item>
-            <Space align="center" className=" flex justify-center w-full">
+            <Space align="center" className=" flex justify-center w-full md:mt-4">
               <Button className="bg-primary-50 rounded-lg border-primary  text-primary  text-center px-[15px] py-[4px] font-bold hover:text-primary hover:border-primary">
                 Hủy bỏ
               </Button>
