@@ -55,10 +55,11 @@ const OleManager = (props: Props) => {
   useEffect(() => {
     //Data demo
     const data = [];
-    for (let index = 0; index < oleList.length; index++) {
+    for (let index = 0; index < 50; index++) {
+      let indexOle = Math.floor(Math.random() * oleList.length);
       let temp = {
         key: index,
-        tenVaiTro: oleList[index],
+        tenVaiTro: oleList[indexOle],
         soNguoiDung: 6,
         moTa: 'Thực hiện nhiệm vụ về thống kê số liệu và tổng hợp số liệu',
       };

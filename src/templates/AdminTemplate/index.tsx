@@ -257,7 +257,7 @@ const PrivateTemplate = (props: Props) => {
           </div>
           <div className='flex flex-col items-start '>
             <span className='text-xs'>Xin chào</span>
-            <span className='text-sm font-bold'>Lê Quỳnh Ái Vân</span>
+            <span className='text-sm font-bold'>Lê Huỳnh Ái Vân</span>
           </div>
         </div>
       </div>

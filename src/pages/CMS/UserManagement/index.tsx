@@ -82,12 +82,13 @@ const UserManager = (props: Props) => {
     //Data demo
     const data = [];
     for (let index = 0; index < 50; index++) {
+      const randomPhone = Math.floor(Math.random() * 1000000000);
       let temp = {
         key: index,
-        tenDangNhap: `tuyetnguyen@2${index}`,
+        tenDangNhap: `tuyetnguyen@1${index}`,
         hoTen: `Nguyễn Văn ${(index + 9).toString(36).toUpperCase()}`,
-        soDienThoai: '0919256712',
-        email: `tuyetnguyen12${index}@gmail.com`,
+        soDienThoai: randomPhone,
+        email: 'tuyetnguyen123@gmail.com',
         vaiTro: 'Kế toán',
         trangThai: index % 2 === 0 ? true : false,
       };
