@@ -100,7 +100,7 @@ const PrivateTemplate = (props: Props) => {
           <div className="w-8 h-0.5 bg-gray-600"></div>
         </button>
         {/* Nav for mobile */}
-        <div className={`${hamburger ? "block" : "hidden"} z-50`} >
+        <div className={`2xl:invisible lg:visible ${hamburger ? "block" : "hidden"} z-50`} >
           <div  className='fixed w-52 z-50 bg-white left-nav h-full flex flex-col items-center' >
             <div className='logo flex justify-center items-center h-[100px] w-full '>
               <Link to='/' className='flex items-center h-1/3 w-1/3 object-cover'>
