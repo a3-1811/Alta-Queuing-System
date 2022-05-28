@@ -43,19 +43,8 @@ import UserLog from '../pages/CMS/UserLog';
 import UDashboard from "../pages/UGraves/UDashboard";
 import UDashboard2 from "../pages/UGraves/UDashboard2";
 
-
 // Private routes
 export const privatesRoute = [
-  {path: '/' , component : Dashboard},
-  {path: '/login' , component : Login},
-  {path: '/resetpass' , component : ResetPassword},
-  {path: '/newpass' , component : ResetNewPassword},
-  {path: '/leveldevice' , component : GearLevelDevice},
-  {path: '/settinggear' , component : SettingGearDevice},
-  {path: '/viewsettinggear' , component : SettingViewDevice},
-  {path: '/displaydevice' , component : SettingDisplayDevice},
-  {path: '/devicemain' , component : ViewDeviceMain},
-  {path: '/viewdevice' , component : ViewDeviceCounte},
   {path: '/dashboard' , component : Dashboard},
   {path: '/dashboard/profile' , component : Profile},
   {path: '/devices-management' , component : DeviceManager},
@@ -80,4 +69,18 @@ export const privatesRoute = [
   {path: '/under-graves' , component : UDashboard},
   {path: '/under-graves/dashboard2' , component : UDashboard2},
 
+]
+
+export const publicRoutes = [
+  {path: '/' , component : Login},
+  {path: '/login' , component : Login},
+  {path: '/resetpass' , component : ResetPassword},
+  {path: '/newpass' , component : ResetNewPassword},
+  {path: '/leveldevice' , component : GearLevelDevice},
+  {path: '/settinggear' , component : SettingGearDevice},
+  {path: '/viewsettinggear' , component : SettingViewDevice},
+  {path: '/displaydevice' , component : SettingDisplayDevice},
+  {path: '/devicemain' , component : ViewDeviceMain},
+  {path: '/viewdevice' , component : ViewDeviceCounte},
+  {path: '*' , component : Page404},
 ]

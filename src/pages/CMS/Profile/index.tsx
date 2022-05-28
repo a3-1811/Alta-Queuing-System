@@ -71,21 +71,21 @@ const Profile = () => {
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='username'
               >
-                <Input placeholder='username' />
+                <Input placeholder='username' disabled />
               </Form.Item>
               <Form.Item
                 label='Số điện thoại'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='phoneNumber'
               >
-                <Input placeholder='0392680723' />
+                <Input placeholder='0392680723' disabled />
               </Form.Item>
               <Form.Item
                 label='Email'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='email'
               >
-                <Input placeholder='example@gmail.com' />
+                <Input placeholder='example@gmail.com' disabled />
               </Form.Item>
             </Col>
             <Col sm={24} lg={8} md={24}>
@@ -94,21 +94,21 @@ const Profile = () => {
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='loginName'
               >
-                <Input placeholder='lehuynhaivan2000' />
+                <Input placeholder='lehuynhaivan2000' disabled />
               </Form.Item>
               <Form.Item
                 label='Mật khẩu'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='password'
               >
-                <Input placeholder='huynhleaivan@123' className='' />
+                <Input placeholder='huynhleaivan@123' disabled className='' />
               </Form.Item>
               <Form.Item
                 label='Vai trò'
                 className='text-base font-semibold leading-6 text-primary-gray-500'
                 name='role'
               >
-                <Input placeholder='Front-End Developer' />
+                <Input placeholder='Front-End Developer' disabled />
               </Form.Item>
             </Col>
           </Row>
