@@ -8,34 +8,64 @@
 	vaiTro: id reference from Role
 	trangThai: Boolean
  */
-import { doc,updateDoc,arrayUnion,getDoc,deleteDoc,setDoc,onSnapshot } from "firebase/firestore";
+import { doc,updateDoc,setDoc, collection, getDocs, query, where } from "firebase/firestore";
 import firebase from "../firebase";
 import IUser from "../types/user.type";
 
-const db = firebase
+const db = collection(firebase,'user')
 
 class UserServices{
   addNewUser = async (user: IUser) => {
-    let document = doc(db, "user", user.tenDangNhap);
-    let temp = {...user}
-    updateDoc(document, {
-      ...temp
-    });
+    await setDoc(doc(db), user);
   };
   
-  getUser = async (tenDangNhap:string) => {
-    let document = doc(db, "user");
-    onSnapshot(document, (snapshot : any) => {
-      if (snapshot.exists) {
-        return snapshot.data();
+  getUsers = async () => {
+    let users : IUser[] = []
+    const querySnapshot = await getDocs(db);
+    querySnapshot.forEach((doc: any) => {
+      let temp = doc.data()
+      let user : IUser= {
+        id: doc.id,
+        tenDangNhap :temp.tenDangNhap,
+        hoTen :temp.hoTen,
+        email :temp.email,
+        matKhau :temp.matKhau,
+        soDienThoai :temp.soDienThoai,
+        trangThai :temp.trangThai,
+        vaiTro :temp.vaiTro
       }
+      users.push(user)
     });
+    return users
   };
    updateUser = async (user: IUser) => {
-    let document = doc(db, "user", user.tenDangNhap);
-    updateDoc(document, {
-      ...user
+    const docRef = doc(db,user.id)
+    let temp = {...user}
+    delete temp.id
+    const updated = await updateDoc(docRef,{
+      ...temp  
     });
+    return updated
   };
+  login = async(tenDangNhap:string, matKhau:string)=>{
+    const q = query(db, where("tenDangNhap", "==", tenDangNhap));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      let temp = {
+       ...doc.data()
+     };
+     return {
+      id: doc.id,
+      tenDangNhap :temp.tenDangNhap,
+      hoTen :temp.hoTen,
+      email :temp.email,
+      matKhau :temp.matKhau,
+      soDienThoai :temp.soDienThoai,
+      trangThai :temp.trangThai,
+      vaiTro :temp.vaiTro
+    }
+    });
+  }
 }
 export default new UserServices()

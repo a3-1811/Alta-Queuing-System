@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DatePicker, Input } from 'antd';
 import { Table } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import './style.scss';
+import LogServices from '../../../db/services/log_system.services';
+import ILog from '../../../db/types/log_system.type';
 type Props = {};
 
 const columns = [
@@ -28,6 +30,8 @@ const columns = [
   },
 ];
 const UserLog = (props: Props) => {
+  const [logss, setLogss]= useState<ILog[]>([])
+  const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [table, setTable] = useState({
     data: [],
     pagination: {
@@ -40,22 +44,13 @@ const UserLog = (props: Props) => {
     console.log(date, dateString);
   };
   useEffect(() => {
-    //Data demo
-    const data = [];
-    for (let index = 0; index < 50; index++) {
-      let temp = {
-        key: index,
-        tenDangNhap: 'tuyetnguyen@12',
-        thoiGian: '01/12/2021 15:12:17',
-        ip: '192.168.3.1',
-        thaoTac: 'Cập nhật thông tin dịch vụ DV_01',
-      };
-      data.push(temp);
-    }
-
+    (async()=>{
+    let data = await LogServices.getLogs()
+    setLogss(data)
     setTable({ ...table, data: data as any });
+    })()
   }, []);
-
+  
   const handlePanigationChange = (current: any) => {
     setTable({ ...table, pagination: { ...table.pagination, current } });
   };

@@ -1,4 +1,5 @@
 export default interface User {
+  id? : string;
   tenDangNhap: string;
   hoTen: string;
   soDienThoai: string;
@@ -6,4 +7,5 @@ export default interface User {
   matKhau: string;
   vaiTro: string;
   trangThai: Boolean;
+  maVaiTro?: string
 }
