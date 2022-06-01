@@ -3,7 +3,7 @@ interface SizeTwo<T> {
   1: T;
 }
 export default interface Service {
-  maDichVu: string;
+  id?: string;
   tenDichVu: string;
   moTa: string;
   autoIncrease: SizeTwo<string>;

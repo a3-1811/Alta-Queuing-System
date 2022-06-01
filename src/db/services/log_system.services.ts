@@ -6,7 +6,7 @@
 	Ip: IP format String
 	Action: String
  */
-    import { doc,updateDoc,arrayUnion,getDoc,deleteDoc,setDoc,onSnapshot, collection, getDocs } from "firebase/firestore";
+    import { doc,setDoc, collection, getDocs } from "firebase/firestore";
     import firebase from "../firebase";
     import ILogSystem from "../types/log_system.type";
     

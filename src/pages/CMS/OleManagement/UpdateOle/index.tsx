@@ -5,6 +5,10 @@ import RoleServices from "../../../../db/services/role.services";
 import IRole from "../../../../db/types/role.type";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import { fetchIP } from "../../../../db/others/ipaddress";
+import { useAppSelector} from "../../../../app/hooks";
+import { selectUser } from "../../../../features/user/userSlice";
+import log_systemServices from "../../../../db/services/log_system.services";
 type Props = {};
 
 /* eslint-disable no-template-curly-in-string */
@@ -17,6 +21,7 @@ const UpdateOle = (props: Props) => {
   const history = useNavigate();
   const [form] = Form.useForm();
   const [roles, setRoles] = useState<IRole[]>([]);
+  const me = useAppSelector(selectUser)
   useEffect(() => {
     (async () => {
       let data = await RoleServices.getRoles();
@@ -31,8 +36,7 @@ const UpdateOle = (props: Props) => {
       });
     })();
   }, []);
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = async(values: any) => {
     let { tenVaiTro, moTa } = values;
     RoleServices.updateRole({
       id,
@@ -45,6 +49,13 @@ const UpdateOle = (props: Props) => {
       icon: "success",
       confirmButtonText: "Xác nhận",
     });
+    let ipv4 = await fetchIP()
+      log_systemServices.addNewLog({
+        action : `Cập nhật vai trò ${tenVaiTro}`,
+        actionTime : new Date(),
+        ip :ipv4.IPv4,
+        tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
+      })
   };
   return (
     <div className="content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 md:mt-3 relative ole-update">

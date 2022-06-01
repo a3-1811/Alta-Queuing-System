@@ -31,6 +31,9 @@ const Login = () => {
           confirmButtonText: "Xác nhận",
         }
       )
+      let temp = {...user}
+      delete temp.matKhau
+      localStorage.setItem('user',JSON.stringify(temp))
       setTimeout(()=>{
         history('/dashboard')
       },1000)

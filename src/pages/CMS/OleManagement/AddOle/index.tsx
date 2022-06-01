@@ -4,7 +4,10 @@ import './style.scss';
 import RoleServices from "../../../../db/services/role.services";
 import IRole from "../../../../db/types/role.type";
 import Swal from 'sweetalert2'
-
+import LogSystemServices from '../../../../db/services/log_system.services';
+import { fetchIP } from '../../../../db/others/ipaddress';
+import { useAppSelector} from "../../../../app/hooks";
+import { selectUser } from "../../../../features/user/userSlice";
 type Props = {};
 
 /* eslint-disable no-template-curly-in-string */
@@ -14,6 +17,8 @@ const validateMessages = {
 
 const AddOle = (props: Props) => {
   const [roles, setRoles]= useState<IRole[]>([])
+  const me = useAppSelector(selectUser)
+
   useEffect(() => {
     (async()=>{
     let data = await RoleServices.getRoles()
@@ -37,7 +42,7 @@ const AddOle = (props: Props) => {
 //     str = str.replace(/Đ/g, "D");
 //     return str;
 // }
-  const onFinish = (values : any)=>{
+  const onFinish = async (values : any)=>{
     // let index = roles.findIndex(item=> xoa_dau(item.tenVaiTro.toLocaleLowerCase()).includes(xoa_dau(values.tenVaiTro.toLocaleLowerCase())) )
     let role = {
       tenVaiTro : values.tenVaiTro,
@@ -50,6 +55,13 @@ const AddOle = (props: Props) => {
       icon: 'success',
       confirmButtonText: 'Xác nhận'
     })
+    let ipv4 = await fetchIP()
+      LogSystemServices.addNewLog({
+        action : `Thêm vai trò ${role.tenVaiTro}`,
+        actionTime : new Date(),
+        ip :ipv4.IPv4,
+        tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
+      })
   }
   return (
     <div className='content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 md:mt-3 relative ole-add'>

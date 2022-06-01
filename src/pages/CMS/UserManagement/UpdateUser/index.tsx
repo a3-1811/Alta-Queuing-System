@@ -11,6 +11,8 @@ import IUser from "../../../../db/types/user.type";
 import LogServices from "../../../../db/services/log_system.services";
 import ILog from "../../../../db/types/log_system.type";
 import { fetchIP } from "../../../../db/others/ipaddress";
+import { useAppSelector} from "../../../../app/hooks";
+import { selectUser } from "../../../../features/user/userSlice";
 import Swal from "sweetalert2";
 
 const validateMessages = {
@@ -25,7 +27,7 @@ const UpdateUser = () => {
   const [roles, setRoles] = useState<IRole[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
   const [user, setUser] = useState<IUser>();
-
+  const me = useAppSelector(selectUser)
   // Tình trạng
   const statusList = [
     {
@@ -107,12 +109,12 @@ const UpdateUser = () => {
         confirmButtonText: "Xác nhận",
       });
       //Add user log
-      let ip = await fetchIP()
+      let ipv4 = await fetchIP()
       LogServices.addNewLog({
-        action : 'Cập nhật thông tin user '+user.tenDangNhap,
+        action : `Cập nhật tài khoản ${user?.tenDangNhap}`,
         actionTime : new Date(),
-        ip : ip.IPv4,
-        tenDangNhap : 'user reducer'
+        ip :ipv4.IPv4,
+        tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
       })
     }
   };

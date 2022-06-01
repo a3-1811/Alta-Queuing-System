@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, NavLink, Link, LinkProps } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
+  updateUser,
   selectUser,
   selectUserStatus
 } from "../../features/user/userSlice";
@@ -16,15 +17,23 @@ const PrivateTemplate = (props: Props) => {
   const [hamburger, setHamburger] = useState(false)
   const history = useNavigate()
 
+  const dispatch = useAppDispatch()
   const statusLogin = useAppSelector(selectUserStatus);
   const user = useAppSelector(selectUser);
 
   useEffect(() => {
-    if(statusLogin !== 'idle' || !user){
+    if(localStorage.getItem('user')){
+      let auth = JSON.parse(localStorage.getItem('user') as string)
+      dispatch(updateUser(auth))
+    }else{
       history('/login')
     }
   }, [])
-  
+  const logout = ()=>{
+    localStorage.removeItem('user')
+    dispatch(updateUser(null as any))
+    history('/login')
+  }
   return (
     <div
       className={`overflow-hidden h-screen w-full max-h-screen md:p-1 flex relative admin-template`}
@@ -94,7 +103,7 @@ const PrivateTemplate = (props: Props) => {
                 </div>
               </li>
             </div>
-            <button className='block text-left w-full mt-auto bg-primary bg-opacity-10 '>
+            <button className='block text-left w-full mt-auto bg-primary bg-opacity-10 ' onClick={logout}>
               <li className='px-[17px] py-[10px] text-sm font-medium text-primary hover:text-white hover:bg-primary'>
                 <i className='fa fa-sign-out-alt mr-[8px] hover:text-white'></i>
                 Đăng xuất
@@ -272,7 +281,7 @@ const PrivateTemplate = (props: Props) => {
           </div>
           <div className='flex flex-col items-start '>
             <span className='text-xs'>Xin chào</span>
-            <span className='text-sm font-bold'>Lê Huỳnh Ái Vân</span>
+            <span className='text-sm font-bold'>{user && user.hoTen}</span>
           </div>
         </div>
       </div>

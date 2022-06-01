@@ -7,6 +7,9 @@ import UserServices from "../../../../db/services/user.services";
 import IUser from "../../../../db/types/user.type";
 import LogServices from "../../../../db/services/log_system.services";
 import ILog from "../../../../db/types/log_system.type";
+import { useAppSelector} from "../../../../app/hooks";
+import { selectUser } from "../../../../features/user/userSlice";
+
 import Swal from 'sweetalert2'
 import { fetchIP } from "../../../../db/others/ipaddress";
 import './style.scss';
@@ -15,7 +18,7 @@ const AddUser = () => {
   const { Option } = Select;
   const [roles, setRoles]= useState<IRole[]>([])
   const [users, setUsers]= useState<IUser[]>([])
-
+  const me = useAppSelector(selectUser)
 
   function handleChange(value: any) {
     console.log(`Selected: ${value}`);
@@ -68,6 +71,8 @@ const AddUser = () => {
         trangThai: values.tinhTrang === '0' ? false : true
       }
       delete user.nhapLaiMatKhau
+      delete user.tinhTrang
+
       UserServices.addNewUser(user)
       Swal.fire({
         title: "Success!",
@@ -77,10 +82,12 @@ const AddUser = () => {
       });
       //Add user log
       let ipv4 = await fetchIP()
-      console.log(ipv4)
-      // LogServices.addNewLog({
-
-      // })
+      LogServices.addNewLog({
+        action : `Thêm tài khoản mới ${user?.tenDangNhap}`,
+        actionTime : new Date(),
+        ip :ipv4.IPv4,
+        tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
+      })
     }
   }
   

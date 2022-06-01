@@ -4,7 +4,7 @@ export default interface User {
   hoTen: string;
   soDienThoai: string;
   email: string;
-  matKhau: string;
+  matKhau?: string;
   vaiTro: string;
   trangThai: Boolean;
   maVaiTro?: string

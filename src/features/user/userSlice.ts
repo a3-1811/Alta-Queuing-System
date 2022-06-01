@@ -45,7 +45,7 @@ export const userSlice = createSlice({
         })
         .addCase(LoginAsync.rejected, (state) => {
           state.status = 'failed';
-        });
+        })
     },
   });
 
