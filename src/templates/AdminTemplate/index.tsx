@@ -1,6 +1,11 @@
 import { MoreOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, NavLink, Link, LinkProps } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import {
+  selectUser,
+  selectUserStatus
+} from "../../features/user/userSlice";
 import './style.scss';
 type Props = {
   children?: JSX.Element | JSX.Element[];
@@ -9,7 +14,17 @@ type Props = {
 const PrivateTemplate = (props: Props) => {
   const [isOpen, setisOpen] = useState(false)
   const [hamburger, setHamburger] = useState(false)
+  const history = useNavigate()
 
+  const statusLogin = useAppSelector(selectUserStatus);
+  const user = useAppSelector(selectUser);
+
+  useEffect(() => {
+    if(statusLogin !== 'idle' || !user){
+      history('/login')
+    }
+  }, [])
+  
   return (
     <div
       className={`overflow-hidden h-screen w-full max-h-screen md:p-1 flex relative admin-template`}

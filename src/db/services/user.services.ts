@@ -48,24 +48,16 @@ class UserServices{
     return updated
   };
   login = async(tenDangNhap:string, matKhau:string)=>{
-    const q = query(db, where("tenDangNhap", "==", tenDangNhap));
+    const q = query(db, where("tenDangNhap", "==", tenDangNhap), where("matKhau", "==", matKhau));
     const querySnapshot = await getDocs(q);
+    let temp = null
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      let temp = {
-       ...doc.data()
+      temp = {
+       ...doc.data(),
+       id: doc.id
      };
-     return {
-      id: doc.id,
-      tenDangNhap :temp.tenDangNhap,
-      hoTen :temp.hoTen,
-      email :temp.email,
-      matKhau :temp.matKhau,
-      soDienThoai :temp.soDienThoai,
-      trangThai :temp.trangThai,
-      vaiTro :temp.vaiTro
-    }
     });
+    return temp
   }
 }
 export default new UserServices()

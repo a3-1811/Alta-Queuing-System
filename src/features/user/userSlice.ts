@@ -2,21 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import IUser from "../../db/types/user.type";
 import UserServices from "../../db/services/user.services";
-// Services user
-
-
-export interface UserState {
-    value: IUser | {};
-    status: 'idle' | 'loading' | 'failed';
-}
-
-interface LoginPayload{
-    tenDangNhap:string;
-     matKhau:string;
-}
-
+// Type actions
+import { LoginPayload,UserState } from "./types-action";
+// Initital state
 const initialState: UserState = {
-    value: {},
+    value: null,
     status: 'idle',
 };
 // Async function with database
@@ -46,7 +36,12 @@ export const userSlice = createSlice({
         })
         .addCase(LoginAsync.fulfilled, (state, action:PayloadAction<any>) => {
           state.status = 'idle';
-          state.value = action.payload ;
+          if(action.payload){
+            state.value = action.payload ;
+          }else{
+            state.status = 'failed';
+            state.value = null
+          }
         })
         .addCase(LoginAsync.rejected, (state) => {
           state.status = 'failed';
@@ -57,5 +52,6 @@ export const userSlice = createSlice({
   export const { updateUser } = userSlice.actions;
 
   export const selectUser = (state: RootState) => state.user.value;
+  export const selectUserStatus = (state: RootState) => state.user.status;
 
   export default userSlice.reducer;
