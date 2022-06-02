@@ -8,7 +8,7 @@
 	surfix: String,
   resetEveryDay: Boolean
  */
-    import { doc,setDoc, collection, getDocs } from "firebase/firestore";
+    import { doc,setDoc, collection, getDocs, updateDoc } from "firebase/firestore";
     import firebase from "../firebase";
     import IService from "../types/service.type";
     
@@ -26,16 +26,27 @@
           let temp = doc.data()
           let service : IService= {
             id: doc.id,
+            maDichVu: temp.maDichVu,
             moTa :temp.moTa,
             tenDichVu: temp.tenDichVu,
             prefix: temp.prefix,
             surfix: temp.surfix,
             autoIncrease: temp.autoIncrease,
             resetEveryDay: temp.resetEveryDay,
+            trangThai: temp.trangThai
           }
           services.push(service)
         });
         return services
+      };
+      updateService = async (service: IService) => {
+        const docRef = doc(db,service.id)
+        let temp = {...service}
+        delete temp.id
+        const updated = await updateDoc(docRef,{
+          ...temp  
+        });
+        return updated
       };
     }
     export default new ServiceServices()

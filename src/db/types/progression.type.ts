@@ -1,20 +1,22 @@
-enum TinhTrang {
+export enum TrangThai {
   PENDING = "pending",
   USED = "used",
   REMOVE = "remove",
 }
-enum NguonCap {
+export enum NguonCap {
   KIOSK = "Kiosk",
   SYSTEM = "Hệ thống",
 }
 export default interface Progression {
+  id?:string;
   stt: string;
   hoTen: string;
   soDienThoai: string;
-  email: string | null;
+  email: string;
   dichVu: string;
   thoiGianCap: Date;
   hanSuDung: Date;
-  tinhTrang: TinhTrang;
+  trangThai: TrangThai;
   nguonCap: NguonCap;
+  tenDichVu?:string;
 }

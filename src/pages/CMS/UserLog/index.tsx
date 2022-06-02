@@ -35,6 +35,8 @@ const columns = [
 ];
 const UserLog = (props: Props) => {
   const [logs, setLogs]= useState<ILog[]>([])
+  const [key, setKey]= useState('')
+
   const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [time, setTime] = useState({
     startDay: moment(),
@@ -85,13 +87,14 @@ const UserLog = (props: Props) => {
 }
   const handleKeyWordChange  = (e: React.FormEvent<HTMLInputElement>)=>{
     let value= e.currentTarget.value
+    setKey(value)
     if(searchRef){
       clearInterval(searchRef.current as any)
     }
     searchRef.current = setTimeout(() => {
      let temp = logs.filter((log)=>{
       let temp = log.actionTime as any
-      return  moment(temp.toDate()) >= time.startDay && moment(temp.toDate()) <= time.endDay
+      return  (moment(temp.toDate()) >= time.startDay && moment(temp.toDate()) <= time.endDay) || (moment(temp.toDate()).isSame(time.endDay,'day') || moment(temp.toDate()).isSame(time.startDay,'day'))
     }).filter(item=>
       xoa_dau(item.tenDangNhap.toLocaleLowerCase()).includes(xoa_dau(value.toLocaleLowerCase()))
       ||  xoa_dau(item.action.toLocaleLowerCase()).includes(xoa_dau(value.toLocaleLowerCase()))
@@ -103,27 +106,37 @@ const UserLog = (props: Props) => {
       clearInterval(searchRef.current as any)
     }, 700);
   }
+  const handleDateChange = (start:any,end:any)=>{
+    let temp = logs.filter((log)=>{
+      let temp = log.actionTime as any
+      return  (moment(temp.toDate()) >= start && moment(temp.toDate()) <= end) || (moment(temp.toDate()).isSame(end,'day') || moment(temp.toDate()).isSame(start,'day'))
+    }).filter(item=>
+      xoa_dau(item.tenDangNhap.toLocaleLowerCase()).includes(xoa_dau(key.toLocaleLowerCase()))
+      ||  xoa_dau(item.action.toLocaleLowerCase()).includes(xoa_dau(key.toLocaleLowerCase()))
+      || xoa_dau(item.ip.toLocaleLowerCase()).includes(xoa_dau(key.toLocaleLowerCase()))
+      || xoa_dau(item.tenDangNhap.toLocaleLowerCase()).includes(xoa_dau(key.toLocaleLowerCase()))
+      )
+
+      setTable({...table,data : temp as any})
+  }
+
   const handleStartDateChange = (date: any, dateString: String) => {
     let temp = date.clone()
     if(date > time.endDay){
       setTime({startDay: temp,endDay: date.add(7,'days')})
+      handleDateChange(temp,date)
     }else{
      setTime({...time,startDay: temp})
+     handleDateChange(temp,time.endDay)
     }
   };
   const handleEndDateChange = (date: any, dateString: String) => {
     setTime({...time,endDay: date})
+    handleDateChange(time.startDay,date)
   };
   function disabledDate(current:any) {  
     return current < time.startDay ;
-}
-useEffect(() => {
-  let data = logs.filter((log)=>{
-    let temp = log.actionTime as any
-    return  moment(temp.toDate()) >= time.startDay && moment(temp.toDate()) <= time.endDay
-  })
-  setTable({ ...table, data: data as any });
-}, [time])
+  }
 
   return (
     <div className='content pl-[24px] pt-[29px] pr-[100px] md:mt-3 lg:pr-2 relative user-log'>

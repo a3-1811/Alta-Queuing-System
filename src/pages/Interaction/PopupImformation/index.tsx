@@ -1,20 +1,32 @@
 import React, { useState, MouseEventHandler } from 'react';
-import { Modal, Button, Input } from 'antd';
+import { Modal, Button, Input, Form } from 'antd';
 import './style.scss';
 import PopupNumberPrint from '../../Interaction/PopupNumberPrint';
+import IService from "../../../db/types/service.type";
+import ILog from "../../../db/types/log_system.type";
+import IProgression,{NguonCap,TrangThai} from "../../../db/types/progression.type";
+import LogServices from "../../../db/services/log_system.services";
+import ProgressionServices from "../../../db/services/progression.services";
+import Swal from "sweetalert2";
+import { useAppSelector } from '../../../app/hooks';
+import { selectUser } from '../../../features/user/userSlice';
+import { fetchIP } from '../../../db/others/ipaddress';
 
 type Props = {
   showModal: MouseEventHandler;
   handleOk: MouseEventHandler;
   handleCancel: MouseEventHandler;
   isModalVisible: boolean;
+  service : IService
 };
 const FillImformation = (props: Props) => {
-  const [isModalVisible1, setIsModalVisible1] = useState(false);
+  const { showModal, handleCancel, isModalVisible,service } = props;
+  const [info, setInfo] = useState(null)
+  const [result, setResult] = useState(null)
+  const me = useAppSelector(selectUser)
 
-  const showModal1 = () => {
-    setIsModalVisible1(true);
-  };
+
+  const [isModalVisible1, setIsModalVisible1] = useState(false);
 
   const handleOk = (e: any) => {
     e.preventDefault();
@@ -25,7 +37,64 @@ const FillImformation = (props: Props) => {
     setIsModalVisible1(false);
   };
 
-  const { showModal, handleCancel, isModalVisible } = props;
+  function pad_with_zeroes(number: Number, length:Number) {
+    var my_string = '' + number;
+    while (my_string.length < length) {
+        my_string = '0' + my_string;
+    }
+    return my_string;
+  }
+
+  const handleFinish = async (values : any)=>{
+    setInfo({
+      service,
+      ...values
+    })
+    //Thêm cấp số
+    let hsd = new Date()
+    hsd.setDate(hsd.getDate() + 1);
+    
+    let data = await ProgressionServices.getProgressions()
+    //Tăng stt tự động
+    let dataFilter = data.filter(item=>item.dichVu === service.id)
+    let dataSort : IProgression[] = dataFilter.sort((a :IProgression,b :IProgression)=>{
+      let numberA = parseInt(a.stt.substring(3))
+      let numberB = parseInt(b.stt.substring(3))
+      return numberA - numberB
+    })
+    // Last stt
+    let lastNumber
+    if(dataSort[dataSort.length-1]){
+      lastNumber = parseInt({...dataSort[dataSort.length-1]}.stt.substring(3))
+    }else{
+      lastNumber = 0
+    }
+    
+    let progress : any = {
+      dichVu : service.id,
+      email: values.email,
+      hanSuDung : hsd,
+      hoTen: values.hoTen,
+      nguonCap : NguonCap.SYSTEM,
+      soDienThoai: values.soDienThoai,
+      stt : service.maDichVu+pad_with_zeroes(lastNumber+1,4),
+      thoiGianCap : new Date(),
+      trangThai: TrangThai.PENDING
+    }
+
+    await ProgressionServices.addNewProgression(progress)
+    // Thêm log
+    //Add user log
+    let ipv4 = await fetchIP()
+    LogServices.addNewLog({
+      action : `Cấp số mới ${progress.stt}`,
+      actionTime : new Date(),
+      ip :ipv4.IPv4,
+      tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
+    })
+    setResult({...progress,tenDichVu : service.tenDichVu})
+    setIsModalVisible1(true);
+  }
   return (
     <div className='flex justify-center items-center min-h-screen '>
       <div className=''>
@@ -40,38 +109,69 @@ const FillImformation = (props: Props) => {
           <div className='flex justify-center items-center w-full'>
             <div className='flex flex-col justify-center items-center w-[499px]'>
               <div className='w-full'>
-                <form
+                <Form
                   className='w-full'
-                  onSubmit={e => {
-                    e.preventDefault();
-                  }}
+                  onFinish={handleFinish}
                 >
                   <div className=''>
-                    <label className='text-base font-normal text-primary-gray-500'>
-                      Họ và tên <span className='text-[#FF4747]'>*</span>
-                    </label>
+                    <Form.Item
+                    label="Họ tên"
+                    name={"hoTen"}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập họ tên'
+                      }
+                    ]}
+                    >
                     <Input
                       className='w-full h-11 '
                       placeholder='Nhập họ và tên của bạn'
                     />
+                    </Form.Item>
+                    
                   </div>
                   <div className='mt-4'>
-                    <label className='text-base font-normal text-primary-gray-500'>
-                      Số điện thoại <span className='text-[#FF4747]'> *</span>
-                    </label>
+                  <Form.Item
+                    label="Số điện thoại"
+                    name={"soDienThoai"}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập số điện thoại'
+                      },
+                      {
+                        pattern: new RegExp(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g),
+                        message: "Số điện thoại không đúng định dạng!"
+                      },
+                    ]}
+                    >
                     <Input
                       className='w-full h-11'
                       placeholder='Nhập số điện thoại của bạn'
                     />
+                    </Form.Item>
                   </div>
                   <div className='mt-4 mb-[10px]'>
-                    <label className='text-base font-normal text-primary-gray-500'>
-                      Email <span className='text-[#FF4747]'> *</span>
-                    </label>
+                  <Form.Item
+                    label="Email"
+                    name={"email"}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng email'
+                      },
+                      {
+                        type: 'email',
+                        message: 'Email không đúng định dạng'
+                      }
+                    ]}
+                    >
                     <Input
                       className='w-full h-11 '
                       placeholder='Nhập email của bạn'
                     />
+                    </Form.Item>
                   </div>
                   <span className='text-sm font-normal leading-5'>
                     <strong className='text-[#FF4747]'>* </strong>
@@ -88,23 +188,22 @@ const FillImformation = (props: Props) => {
                     <button
                       type='submit'
                       className='btn-primary'
-                      onClick={showModal1}
                     >
                       Xác nhận
                     </button>
                   </div>
-                </form>
+                </Form>
               </div>
             </div>
           </div>
         </Modal>
       </div>
-      <PopupNumberPrint
+      {result && <PopupNumberPrint
+        result={result}
         handleCancel={handleCancel1}
         handleOk={handleOk}
         isModalVisible={isModalVisible1}
-        showModal={showModal1}
-      ></PopupNumberPrint>
+      ></PopupNumberPrint>}
       ;
     </div>
   );

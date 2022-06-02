@@ -3,7 +3,10 @@ import { DatePicker, Input, Select } from "antd";
 import { Table } from "antd";
 import { CaretDownOutlined, CaretRightOutlined } from "@ant-design/icons";
 import "./style.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import ServiceServices from "../../../../db/services/service.services";
+import IService from "../../../../db/types/service.type";
+import Swal from "sweetalert2";
 type Props = {};
 
 const columns = [
@@ -37,6 +40,8 @@ const columns = [
 
 const ServiceManager = (props: Props) => {
   const { id } = useParams();
+  const [serviceDetail, setServiceDetail] = useState<IService>()
+  const history = useNavigate()
   const [table, setTable] = useState({
     data: [],
     pagination: {
@@ -46,6 +51,17 @@ const ServiceManager = (props: Props) => {
     loading: false,
   });
   const { Option } = Select;
+  useEffect(() => {
+    (async()=>{
+      let data = await ServiceServices.getServices()
+      let index = data.findIndex(item=>item.id === id)
+      if(index===-1){
+        history('/services-management')
+      }else{
+        setServiceDetail(data[index])
+      }
+    })()
+  }, []);
   function handleChange(value: any) {
     console.log(`Selected: ${value}`);
   }
@@ -86,40 +102,54 @@ const ServiceManager = (props: Props) => {
           <table className="mb-3">
             <tbody className="text-left text-base">
               <tr>
-                <th className="pr-5" scope="row">Mã dịch vụ:</th>
-                <td>201</td>
+                <th className="pr-1" scope="row">Mã dịch vụ:</th>
+                <td className="w-2/3">{serviceDetail?.maDichVu}</td>
               </tr>
               <tr>
-                <th className="pr-5" scope="row">Tên dịch vụ:</th>
-                <td>Khám tim mạch</td>
+                <th className="pr-1" scope="row">Tên dịch vụ:</th>
+                <td className="w-2/3">{serviceDetail?.tenDichVu}</td>
               </tr>
               <tr>
-                <th className="pr-5" scope="row">Mô tả:</th>
-                <td>Chuyên các bệnh lý về tim</td>
+                <th className="pr-1" scope="row">Mô tả:</th>
+                <td className="w-2/3">{serviceDetail?.moTa}</td>
               </tr>
             </tbody>
           </table>
           <h3 className="text-primary mb-3 font-bold text-xl">Quy tắc cấp số</h3>
           <table className="mb-3 capSo">
             <tbody className="text-left text-base">
-              <tr >
-                <th  className="pr-5" scope="row">Tăng tự động:</th>
-                <td><input className="inline-block w-16" type="text" value={"0001"}/> đến <input className="inline-block w-16 " type="text" value={"9999"}/></td>
+              {serviceDetail?.autoIncrease[0] ? (
+                <tr >
+                <th  className="pr-5 text-base" scope="row">Tăng tự động:</th>
+                <td><input className="inline-block w-16" type="text" value={serviceDetail?.autoIncrease[0]}/> đến <input className="inline-block w-16 " type="text" value={serviceDetail?.autoIncrease[1]}/></td>
               </tr>
-              <tr >
-                <th  className="pr-5" scope="row">Prefix:</th>
-                <td><input className="inline-block w-16" type="text" value={"0001"}/></td>
+              ) : ''}
+              {
+                serviceDetail?.prefix ? (
+                  <tr >
+                <th  className="pr-5 text-base" scope="row">Prefix:</th>
+                <td><input className="inline-block w-16" type="text" value={serviceDetail?.prefix}/></td>
               </tr>
-              <tr >
-                <th  className="pr-5" scope="row">Surfix:</th>
-                <td><input className="inline-block w-16" type="text" value={"0001"}/></td>
+                ) : ''
+              }
+              {
+                serviceDetail?.surfix ? (
+                  <tr >
+                <th  className="pr-5 text-base" scope="row">Surfix:</th>
+                <td><input className="inline-block w-16" type="text" value={serviceDetail?.surfix}/></td>
               </tr>
-              <tr >
-                <th  className="pr-5" scope="row">Reset mỗi ngày</th>
+                ) : ''
+              }
+              {
+                serviceDetail?.resetEveryDay ? (
+                  <tr >
+                <th  className="pr-5 text-base" scope="row">Reset mỗi ngày</th>
               </tr>
+                ) : ''
+              }
             </tbody>
           </table>
-          <p>Ví dụ: 201-2001</p>
+          <p>Ví dụ: {serviceDetail?.maDichVu}0001</p>
         </div>
         <div className="w-4/6 list-content lg:w-full lg:mt-4">
           <div className="controls flex justify-between xl:flex-col">
