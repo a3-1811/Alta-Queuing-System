@@ -30,7 +30,7 @@ const columns = [
   {
     title: 'Thời gian cấp',
     dataIndex: 'thoiGianCap',
-    width: '18%',
+    width: '17%',
     render: (thoiGianCap:any)=>{
       return <span>{moment(thoiGianCap.toDate()).tz("Asia/Ho_Chi_Minh").format('HH:mm - DD/MM/YYYY')}</span>
      }
@@ -38,7 +38,7 @@ const columns = [
   {
     title: 'Hạn sử dụng',
     dataIndex: 'hanSuDung',
-    width: '18%',
+    width: '17%',
     render: (hanSuDung:any)=>{
       return <span>{moment(hanSuDung.toDate()).tz("Asia/Ho_Chi_Minh").format('HH:mm - DD/MM/YYYY')}</span>
      }

@@ -203,7 +203,7 @@ const ServiceManager = (props: Props) => {
             <Select
               suffixIcon={<CaretDownOutlined />}
               onChange={handleChange}
-              defaultValue={'Tất cả'}
+              defaultValue={'all'}
               className='w-[300px] h-11 text-primary-gray-400'
             >
               <Option value='all'>Tất cả</Option>
