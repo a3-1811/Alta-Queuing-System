@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Row, Col, Checkbox } from 'antd';
+import { Form, Input, Row, Col, Checkbox, Button } from 'antd';
 import './style.scss';
 import RoleServices from "../../../../db/services/role.services";
 import IRole from "../../../../db/types/role.type";
@@ -8,6 +8,7 @@ import LogSystemServices from '../../../../db/services/log_system.services';
 import { fetchIP } from '../../../../db/others/ipaddress';
 import { useAppSelector} from "../../../../app/hooks";
 import { selectUser } from "../../../../features/user/userSlice";
+import { useNavigate } from 'react-router-dom';
 type Props = {};
 
 /* eslint-disable no-template-curly-in-string */
@@ -18,7 +19,7 @@ const validateMessages = {
 const AddOle = (props: Props) => {
   const [roles, setRoles]= useState<IRole[]>([])
   const me = useAppSelector(selectUser)
-
+  const history = useNavigate()
   useEffect(() => {
     (async()=>{
     let data = await RoleServices.getRoles()
@@ -62,6 +63,9 @@ const AddOle = (props: Props) => {
         ip :ipv4.IPv4,
         tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
       })
+  }
+  const handelBackHome = ()=>{
+    history('/ole-management')
   }
   return (
     <div className='content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 md:mt-3 relative ole-add'>
@@ -198,18 +202,18 @@ const AddOle = (props: Props) => {
 
           <Form.Item>
             <div className='flex justify-center items-center mt-3 gap-x-8'>
-              <button
-                type='submit'
-                className='w-[147px] text-primary px-6 py-[10px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white leading-[22px]'
-              >
-                Hủy bỏ
-              </button>
-              <button
-                type='submit'
-                className='w-[147px] text-white px-6 py-[10px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 leading-[22px]'
-              >
-                Thêm
-              </button>
+            <Button
+              className='custom w-[147px] text-primary rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white btn-cancel'
+              onClick={handelBackHome}
+            >
+              Hủy bỏ
+            </Button>
+            <Button
+              htmlType='submit'
+              className='custom w-[147px] text-white rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 '
+            >
+              Thêm
+            </Button>
             </div>
           </Form.Item>
         </Form>

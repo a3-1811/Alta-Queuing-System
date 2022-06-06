@@ -178,19 +178,18 @@ const FillImformation = (props: Props) => {
                     Là trường thông tin bắt buộc
                   </span>
                   <div className='flex justify-center items-center mt-[49px] gap-x-[33px]'>
-                    <button
-                      type='submit'
-                      className='btn-primary btn-outline'
-                      onClick={handleCancel}
-                    >
-                      Hủy bỏ
-                    </button>
-                    <button
-                      type='submit'
-                      className='btn-primary'
-                    >
-                      Xác nhận
-                    </button>
+                  <Button
+                    className='custom w-[147px] text-primary rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white btn-cancel'
+                    onClick={handleCancel}
+                  >
+                    Hủy bỏ
+                  </Button>
+                  <Button
+                    htmlType='submit'
+                    className='custom w-[147px] text-white rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 '
+                  >
+                    Thêm
+                  </Button>
                   </div>
                 </Form>
               </div>

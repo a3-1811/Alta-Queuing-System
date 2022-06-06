@@ -26,6 +26,7 @@ export const userSlice = createSlice({
     reducers: {
       updateUser: (state,action:PayloadAction<IUser>) => {
         state.value = action.payload;
+        localStorage.setItem('user',JSON.stringify(action.payload))
       },
     },
     // Handle async action

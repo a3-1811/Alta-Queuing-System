@@ -16,6 +16,7 @@ const db = collection(firebase,'user')
 
 class UserServices{
   addNewUser = async (user: IUser) => {
+    user.avatar = "https://firebasestorage.googleapis.com/v0/b/queuing-system-160d8.appspot.com/o/default.png?alt=media&token=66012b25-c61c-48d4-a8bf-4cc1bec2e428"
     await setDoc(doc(db), user);
   };
   
@@ -32,7 +33,8 @@ class UserServices{
         matKhau :temp.matKhau,
         soDienThoai :temp.soDienThoai,
         trangThai :temp.trangThai,
-        vaiTro :temp.vaiTro
+        vaiTro :temp.vaiTro,
+        avatar : temp.avatar
       }
       users.push(user)
     });

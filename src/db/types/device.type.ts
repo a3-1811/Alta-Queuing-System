@@ -1,10 +1,12 @@
 export default interface Device {
+  id?:string;
   maThietBi: string;
   tenThietBi: string;
   tenDangNhap: string;
   ip: string;
-  trangThai: Boolean;
+  trangThaiHoatDong: Boolean;
+  trangThaiKetNoi: Boolean;
   matKhau: string;
-  dichVuSD: string[];
+  dichVuSuDung: string[];
   loaiThietBi: "Kiosk" | "Display Counter";
 }

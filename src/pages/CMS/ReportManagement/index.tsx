@@ -206,11 +206,10 @@ const renderCollumns = (dropdownDataStt  : any,dropdownDataDV  : any,dropdownDat
   ];
 }
 const handleDefaultDropdownChange = (name:string,value:any)=>{
-  console.log(name+'-------->',value)
   let nguonCap = filterOptions.sourceSelect === 'all' ? '' : filterOptions.sourceSelect
   let tinhTrang = filterOptions.statusSelect === 'all' ? '' : filterOptions.statusSelect
   let stt = filterOptions.sttSelect === 'all' ? '' : filterOptions.sttSelect
-  let timePicked = name !== 'timeSelect' ? (filterOptions.timeSelect === 'all' ? '' : filterOptions.timeSelect) : value
+  let timePicked = name !== 'timeSelect' ? (filterOptions.timeSelect === 'all' ? '' : filterOptions.timeSelect) : (value === 'all' ? '' : value )
 
   let temp;
   if(timePicked === ''){
@@ -233,19 +232,20 @@ const handleDefaultDropdownChange = (name:string,value:any)=>{
   }
   switch (name) {
     case 'sttSelect':
+      let value1 = value === 'all' ? '' : value
       setFilterOptions({...filterOptions,sttSelect: value})
       let resultStt = temp.filter(item=>
-        item.stt === value && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
+        item.stt.includes(value1) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
         )
         setTable({...table,data : resultStt as any})
       break;
     case 'timeSelect':
       setFilterOptions({...filterOptions,timeSelect: value})
-      console.log(stt,nguonCap,tinhTrang)
-      let resultTime = temp.filter(item=>
-        item.stt.includes(stt) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
-        )
-        setTable({...table,data : resultTime as any})
+        let resultTime = temp.filter(item=>
+          item.stt.includes(stt) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
+          )
+          setTable({...table,data : resultTime as any})
+
       break;
     case 'sourceSelect':
       setFilterOptions({...filterOptions,sourceSelect: value})
@@ -289,22 +289,45 @@ const handleServicesChange = (e:any)=>{
   let dichVu = [...temp]
 
   if(timePicked === ''){
-    let temp = progressions.filter((log)=>{
-      let temp = log.thoiGianCap as any
-      return  (moment(temp.toDate()) >= time.startDay && moment(temp.toDate()) <= time.endDay) || (moment(temp.toDate()).isSame(time.endDay,'day') || moment(temp.toDate()).isSame(time.startDay,'day'))
-    }).filter(item=>
-      item.stt.includes(stt)&& dichVu.some((dv)=>dv.key === item.dichVu) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
-      )
-      setTable({...table,data : temp as any})
+    if(dichVu.length === 0){
+      let temp = progressions.filter((log)=>{
+        let temp = log.thoiGianCap as any
+        return  (moment(temp.toDate()) >= time.startDay && moment(temp.toDate()) <= time.endDay) || (moment(temp.toDate()).isSame(time.endDay,'day') || moment(temp.toDate()).isSame(time.startDay,'day'))
+      }).filter(item=>
+        item.stt.includes(stt)&& item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
+        )
+        setTable({...table,data : temp as any})
+    }else{
+      let temp = progressions.filter((log)=>{
+        let temp = log.thoiGianCap as any
+        return  (moment(temp.toDate()) >= time.startDay && moment(temp.toDate()) <= time.endDay) || (moment(temp.toDate()).isSame(time.endDay,'day') || moment(temp.toDate()).isSame(time.startDay,'day'))
+      }).filter(item=>
+        item.stt.includes(stt)&& dichVu.some((dv)=>dv.key === item.dichVu) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
+        )
+        setTable({...table,data : temp as any})
+    }
+    
   }else{
-    let temp = progressions.filter((log)=>{
-      let temp = log.thoiGianCap as any
-      let temp2 = timePicked as any
-      return moment(temp.toDate()) === moment(temp2.toDate())
-    }).filter(item=>
-      item.stt.includes(stt)&& dichVu.some((dv)=>dv.key === item.dichVu) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
-      )
-      setTable({...table,data : temp as any})
+    if(dichVu.length === 0){
+      let temp = progressions.filter((log)=>{
+        let temp = log.thoiGianCap as any
+        let temp2 = timePicked as any
+        return moment(temp.toDate()) === moment(temp2.toDate())
+      }).filter(item=>
+        item.stt.includes(stt) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
+        )
+        setTable({...table,data : temp as any})
+        return
+    }else{
+      let temp = progressions.filter((log)=>{
+        let temp = log.thoiGianCap as any
+        let temp2 = timePicked as any
+        return moment(temp.toDate()) === moment(temp2.toDate())
+      }).filter(item=>
+        item.stt.includes(stt)&& dichVu.some((dv)=>dv.key === item.dichVu) && item.nguonCap.includes(nguonCap)  && item.trangThai.includes(tinhTrang)
+        )
+        setTable({...table,data : temp as any})
+    }
   }
 }
 const handleDateChange = (start:any,end:any)=>{

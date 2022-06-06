@@ -6,8 +6,9 @@ import {
   Row,
   Col,
   Checkbox,
+  Button,
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.scss";
 import ServiceServices from "../../../../db/services/service.services";
 import IService from "../../../../db/types/service.type";
@@ -43,6 +44,7 @@ const AddService = (props: Props) => {
   const [form] = Form.useForm();
   const me = useAppSelector(selectUser)
   const [services, setServices] = useState<IService[]>()
+  const history = useNavigate() 
   useEffect(() => {
     (async()=>{
       let data = await ServiceServices.getServices()
@@ -114,6 +116,9 @@ const AddService = (props: Props) => {
       tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
     })
   };
+  const handleCancel = ()=>{
+    history('/services-management')
+  }
   return (
     <div className="content pl-[24px] pt-[29px] pr-[100px] lg:pr-2 md:pt-10 relative service-add">
       <div className="path text-gray-600 font-bold text-lg mb-11 ">
@@ -290,18 +295,18 @@ const AddService = (props: Props) => {
             <span className="text-primary">*</span> là trường thông tin bắt buộc
           </span>
           <Space align="center" className=" flex justify-center w-full md:mt-5">
-            <button
-              type="submit"
-              className="w-[160px] text-primary-400 px-6 py-[13px] rounded-lg font-bold text-base outline-none border[1.5px] border-solid border-primary-400 bg-primary-50 leading-[22px]"
-            >
-              Hủy bỏ
-            </button>
-            <button
-              type="submit"
-              className="w-[160px] text-white px-6 py-[13px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 leading-[22px]"
-            >
-              Thêm dịch vụ
-            </button>
+          <Button
+                    className='custom w-[147px] text-primary rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white btn-cancel'
+                    onClick={handleCancel}
+                  >
+                    Hủy bỏ
+                  </Button>
+                  <Button
+                    htmlType='submit'
+                    className='custom w-[147px] text-white rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 '
+                  >
+                    Thêm dịch vụ
+                  </Button>
           </Space>
         </Form>
       </div>

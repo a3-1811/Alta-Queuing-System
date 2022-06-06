@@ -273,7 +273,7 @@ const PrivateTemplate = (props: Props) => {
           <div className='imgBox h-10 w-10 ml-6 rounded-full'>
             <Link to='/dashboard/profile'>
               <img
-                src='https://i.pinimg.com/236x/57/dc/75/57dc75dde00479a9668945fa251ba92b.jpg'
+                src={user?.avatar}
                 className='rounded-full h-full w-full'
                 alt='useraLT'
               />

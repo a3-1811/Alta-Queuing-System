@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Input, Select } from 'antd';
+import { Row, Col, Form, Input, Select, Button } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import RoleServices from "../../../../db/services/role.services";
 import IRole from "../../../../db/types/role.type";
@@ -13,13 +13,14 @@ import { selectUser } from "../../../../features/user/userSlice";
 import Swal from 'sweetalert2'
 import { fetchIP } from "../../../../db/others/ipaddress";
 import './style.scss';
+import { useNavigate } from 'react-router-dom';
 
 const AddUser = () => {
   const { Option } = Select;
   const [roles, setRoles]= useState<IRole[]>([])
   const [users, setUsers]= useState<IUser[]>([])
   const me = useAppSelector(selectUser)
-
+  const history = useNavigate()
   function handleChange(value: any) {
     console.log(`Selected: ${value}`);
   }
@@ -89,6 +90,9 @@ const AddUser = () => {
         tenDangNhap : me ?  me.tenDangNhap : 'Unknown'
       })
     }
+  }
+  const handelBackHome = ()=>{
+    history('/user-management')
   }
   
   return (
@@ -284,18 +288,18 @@ const AddUser = () => {
             Là trường thông tin bắt buộc
           </span>
           <div className='flex justify-center items-center mt-6 gap-x-8'>
-            <button
-              type='submit'
-              className='w-[147px] text-primary px-6 py-[10px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white leading-[22px]'
+          <Button
+              className='custom w-[147px] text-primary rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white btn-cancel'
+              onClick={handelBackHome}
             >
               Hủy bỏ
-            </button>
-            <button
-              type='submit'
-              className='w-[147px] text-white px-6 py-[10px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 leading-[22px]'
+            </Button>
+            <Button
+              htmlType='submit'
+              className='custom w-[147px] text-white rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 '
             >
-              Thêm
-            </button>
+              Cập nhật
+            </Button>
           </div>
         </Form>
       </div>

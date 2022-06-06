@@ -208,3 +208,23 @@ h6 {
   border-radius: 16px;
   background: #fff;
 }
+
+// Custom button
+.custom{
+  &.ant-btn {
+    width: 162px;
+    height: 40px;
+    &:hover {
+      color: #fff;
+      background: #ff9138;
+      border: 1px solid #ff9138;
+    }
+    &.btn-cancel {
+      &:hover {
+        background: #fff;
+        color: #ff9138;
+        border: 1px solid #ff9138;
+      }
+    }
+  }
+}

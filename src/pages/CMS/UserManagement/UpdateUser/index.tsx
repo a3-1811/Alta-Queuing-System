@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Form, Input, Select } from "antd";
+import { Row, Col, Form, Input, Select, Button } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import "./style.scss";
 import { useForm } from "antd/lib/form/Form";
@@ -118,6 +118,9 @@ const UpdateUser = () => {
       })
     }
   };
+  const handelBackHome = ()=>{
+    history('/user-management')
+  }
   return (
     <div className="content pl-[24px] pt-[29px] pr-[100px] xl:pr-2 md:mt-3 relative user-update">
       <div className="path text-primary-gray-light-400 font-bold text-xl leading-[30px] mb-4">
@@ -316,18 +319,18 @@ const UpdateUser = () => {
             Là trường thông tin bắt buộc
           </span>
           <div className="flex justify-center items-center mt-6 gap-x-8">
-            <button
-              type="submit"
-              className="w-[147px] text-primary px-6 py-[10px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white leading-[22px]"
+          <Button
+              className='custom w-[147px] text-primary rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-white btn-cancel'
+              onClick={handelBackHome}
             >
               Hủy bỏ
-            </button>
-            <button
-              type="submit"
-              className="w-[147px] text-white px-6 py-[10px] rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 leading-[22px]"
+            </Button>
+            <Button
+              htmlType='submit'
+              className='custom w-[147px] text-white rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 '
             >
               Cập nhật
-            </button>
+            </Button>
           </div>
         </Form>
       </div>
