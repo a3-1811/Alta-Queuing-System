@@ -261,7 +261,7 @@ const UpdateDevice = () => {
                     htmlType='submit'
                     className='custom w-[147px] text-white rounded-lg font-bold text-base outline-none border border-solid border-primary-400 bg-primary-400 '
                   >
-                    Thêm thiết bị
+                    Cập nhật
                   </Button>
             </div>
           </Form>
