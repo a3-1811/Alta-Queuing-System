@@ -8,6 +8,10 @@ import {
   selectUserStatus
 } from "../../features/user/userSlice";
 import './style.scss';
+import ProgressionServices from "../../db/services/progression.services";
+import IProgression from "../../db/types/progression.type";
+import moment from 'moment-timezone';
+
 type Props = {
   children?: JSX.Element | JSX.Element[];
 };
@@ -16,18 +20,23 @@ const PrivateTemplate = (props: Props) => {
   const [isOpen, setisOpen] = useState(false)
   const [hamburger, setHamburger] = useState(false)
   const history = useNavigate()
+  const [progressions,setProgressions] = useState<IProgression[]>([])
 
   const dispatch = useAppDispatch()
   const statusLogin = useAppSelector(selectUserStatus);
   const user = useAppSelector(selectUser);
 
   useEffect(() => {
-    if(localStorage.getItem('user')){
-      let auth = JSON.parse(localStorage.getItem('user') as string)
-      dispatch(updateUser(auth))
-    }else{
-      history('/login')
-    }
+    (async ()=>{
+      if(localStorage.getItem('user')){
+        let auth = JSON.parse(localStorage.getItem('user') as string)
+        dispatch(updateUser(auth))
+        let data = await ProgressionServices.getProgressions();
+        setProgressions(data)
+      }else{
+        history('/login')
+      }
+    })()
   }, [])
   const logout = ()=>{
     localStorage.removeItem('user')
@@ -207,62 +216,16 @@ const PrivateTemplate = (props: Props) => {
         <div className={` ${isOpen ? "block" : "hidden"} rounded-lg bg-white notifications absolute top-full right-0 w-[360px] min-h-[500px] max-h-[520px]`}>
             <h2 className='rounded-lg rounded-bl-none rounded-br-none w-full px-6 py-2 text-xl bg-primary-400 text-white font-bold'>Thông báo</h2>
             <div className="rounded-lg rounded-tl-none rounded-tr-none list-notifications overflow-y-scroll max-h-[480px] bg-white">
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
-            <div className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
-                <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: Nguyễn Thị Thùy Dung</h4>
-                <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: 12h20 ngày 30/11/2021</span>
-            </div>
+              {progressions?.map((item)=>{
+                let temp = item.thoiGianCap as any
+                let tgNhan = moment(temp.toDate()).add(2,'hour').format('HH[h]hh [ngày] DD/MM/YYYY')
+                return (
+                  <div key={item.stt} className="item w-full px-6 py-4 border-b-[1px] border-gray-300">
+                  <h4 className=' text-primary text-[16px] font-bold mb-1 '>Người dùng: {item.hoTen}</h4>
+                  <span className='text-primary-gray-400 text-[16px] '>Thời gian nhận số: {tgNhan}</span>
+              </div>
+                )
+              })}
             </div>
           </div>
         </div>

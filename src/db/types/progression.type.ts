@@ -1,7 +1,7 @@
 export enum TrangThai {
   PENDING = "pending",
   USED = "used",
-  REMOVE = "remove",
+  REMOVE = "removed",
 }
 export enum NguonCap {
   KIOSK = "Kiosk",

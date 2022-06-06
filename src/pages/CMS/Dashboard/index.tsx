@@ -19,7 +19,7 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-} from 'chart.js';
+} from "chart.js";
 import AdminRightContent from '../AdminRightContent';
 import ProgressionServices from "../../../db/services/progression.services";
 import IProgression from "../../../db/types/progression.type";
@@ -36,57 +36,30 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
+  LineElement
 );
-const data = function () {
-  var canvas = document.createElement('canvas');
-  var chart = canvas.getContext('2d');
-  if (chart !== null) {
-    let gradient = chart.createLinearGradient(0, 0, 0, 450);
 
-    gradient.addColorStop(0, 'rgba(206, 221, 255,1)');
-    gradient.addColorStop(0.5, 'rgba(206, 221, 255,0.7)');
-    gradient.addColorStop(1, 'rgba(206, 221, 255,0.3)');
-    return {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-      datasets: [
-        {
-          label: 'Chanllenge',
-          data: [33, 100, 85, 100, 70, 100],
-          fill: true,
-          backgroundColor: gradient,
-          borderColor: '#5185F7',
-          pointStyle: 'circle',
-          pointRadius: 6,
-          pointBorderWidth: 3,
-          pointBorderColor: '#fff',
-          pointBackgroundColor: '#5185F7',
-        },
-      ],
-    };
-  }
-};
 const options = {
   plugins: {
     legend: {
       display: false,
     },
     tooltip: {
-      yAlign: 'bottom',
+      yAlign: "bottom",
       padding: {
         left: 30,
         right: 30,
         top: 5,
         bottom: 5,
       },
-      backgroundColor: '#5185F7',
+      backgroundColor: "#5185F7",
       displayColors: false,
       callbacks: {
-        title: function (tooltipItem: any) {
+        title: function (tooltipItem:any) {
           return;
         },
-        label: function (tooltipItem: any) {
-          return tooltipItem.dataset.data[tooltipItem['dataIndex']];
+        label: function (tooltipItem:any) {
+          return tooltipItem.dataset.data[tooltipItem["dataIndex"]];
         },
       },
     },
@@ -102,8 +75,8 @@ const options = {
   scale: {
     yAxes: [
       {
-        type: 'linear',
-        position: 'bottom',
+        type: "linear",
+        position: "bottom",
         ticks: {
           max: 100,
           min: 0,
@@ -120,6 +93,8 @@ function Dashboard() {
   const [services, setServices] = useState<IService[]>([])
   const [devices, setDevices] = useState<IDevice[]>([])
   const [detail, setDetail] = useState<any>({})
+  const [dateSelected, setDateSelected] = useState(new Date())
+  const [filter, setFilter] = useState('day')
 
   useEffect(() => {
    (async ()=>{
@@ -151,7 +126,117 @@ function Dashboard() {
       setDetail(temp)
    })()
   }, [])
-  
+  const renderDataSetMoney = () => {
+    var canvas = document.createElement("canvas");
+    var chart = canvas.getContext("2d");
+    let gradient = chart?.createLinearGradient(0, 0, 0, 450);
+
+    gradient?.addColorStop(0, "rgba(206, 221, 255,1)");
+    gradient?.addColorStop(0.5, "rgba(206, 221, 255,0.7)");
+    gradient?.addColorStop(1, "rgba(206, 221, 255,0.3)");
+    // Variable
+    let date = dateSelected;
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    const days = new Date(year, month, 0).getDate();
+    let listDays = Array.from({ length: days }, (_, i) => i + 1);
+    let listMonths = Array.from({ length: 12 }, (_, i) => i + 1);
+    //Cacluator money earn incoming
+    let labels :any[]= [];
+    let data = [33, 53, 85, 41, 44, 65];
+    switch (filter) {
+      case "day":
+        // Caclulator day by day
+        var temp = listDays.reduce((curr:number[], next) => {
+          let ProgressOfDay = progressions.filter(
+            (progress) =>{
+              let temp = progress.thoiGianCap as any
+              return  new Date(temp.toDate()).getDate() === next &&
+              new Date(temp.toDate()).getMonth() + 1 === month &&
+              new Date(temp.toDate()).getFullYear() === year
+        });
+          curr.push(ProgressOfDay.length);
+          return [...curr];
+        }, []);
+        labels = [...listDays];
+        data = [...temp];
+        console.log(temp)
+        break;
+      case "week":
+        //day of week start of month
+        let weekArray = [];
+        for (let i = 0; i < 4; i++) {
+          let obj = {startDay :new Date(year, month - 1, 7 * i + 1),
+            endDay: new Date(year, month - 1, 7 * i + 7)};
+            weekArray.push(obj);
+        }
+        // Caclulator week
+        var temp = weekArray.reduce((curr:number[], next) => {
+          let numberOfDay = progressions.filter((progress) => {
+            let temp = progress.thoiGianCap as any
+            if (
+              next.startDay <= new Date(temp.toDate()) &&
+              next.endDay >= new Date(temp.toDate())
+            ) {
+              return true;
+            }
+            return false;
+          });
+          curr.push(numberOfDay.length);
+          return [...curr];
+        }, []);
+        labels = ["Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4"];
+        data = [...temp];
+        break;
+      case "month":
+        //day of week start of month
+        // Caclulator week
+        var temp = listMonths.reduce((curr:number[], next) => {
+          let numberOfDay = progressions.filter((progress) => {
+            let temp = progress.thoiGianCap as any
+            if (
+              next === new Date(temp.toDate()).getMonth() + 1 &&
+              year === new Date(temp.toDate()).getFullYear()
+            ) {
+              return true;
+            }
+            return false;
+          });
+          curr.push(numberOfDay.length);
+          return [...curr];
+        }, []);
+        labels = [...listMonths];
+        data = [...temp];
+        break;
+      default:
+        break;
+    }
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: "Số đã cấp (lượt)",
+          data: data,
+          fill: true,
+          backgroundColor: gradient,
+          borderColor: "#5185F7",
+          pointStyle: "circle",
+          pointRadius: 6,
+          pointBorderWidth: 3,
+          pointBorderColor: "#fff",
+          pointBackgroundColor: "#5185F7",
+        },
+      ],
+    };
+  };
+  const handleDateChange = (date: any) =>{
+    console.log(typeof date)
+    setDateSelected(date)
+  }
+  const handleFilterChange = (value:any)=>{
+    setFilter(value)
+  }
   return (
     <div className='flex w-full'>
       <div className='pt-5 dashboard__main w-2/3'>
@@ -233,13 +318,14 @@ function Dashboard() {
               <div className='selectBox flex justify-center items-center gap-x-3'>
                 <span className='font-bold text-sm'>Xem theo</span>
                 <Select
-                  defaultValue={'Day'}
+                  defaultValue={'day'}
                   className='text-gray-500'
                   suffixIcon={<CaretDownOutlined className='text-primary' />}
+                  onChange={handleFilterChange}
                 >
-                  <Option value='Day'>Ngày</Option>
-                  <Option value='Week'>Tuần</Option>
-                  <Option value='Year'>Năm</Option>
+                  <Option value='day'>Ngày</Option>
+                  <Option value='week'>Tuần</Option>
+                  <Option value='month'>Năm</Option>
                 </Select>
                 {/* <select className="rounded-2xl cursor-pointer focus:outline-none w-[100px] outline-none border-gray-200 border-1 px-[12px] py-[5px] ">
                 <option value="day">Day</option>
@@ -248,11 +334,11 @@ function Dashboard() {
               </div>
             </div>
             {/* Chart  */}
-            <Line data={data() as any} options={options as any} />
+            {progressions && <Line data={renderDataSetMoney() as any} options={options as any} />}
           </div>
         </div>
       </div>
-      <AdminRightContent services={services} devices={devices} progressions={progressions}/>
+      <AdminRightContent services={services} devices={devices} progressions={progressions} handleDateChange={handleDateChange}/>
     </div>
   );
 }
