@@ -1,20 +1,19 @@
 import { initializeApp } from "firebase/app" ;   
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = { 
-  apiKey : "AIzaSyChT-i_JAVnusNApt3boGgoLRRg5uis8pU" , 
-  authDomain : "queuing-system-160d8.firebaseapp.com" , 
-  projectId : "queuing-system-160d8" , 
-  storageBucket : "queuing-system-160d8.appspot.com" , 
-  messagingSenderId : "776682024643" , 
-  appId : "1:776682024643:web:5342e3962df176e4d67c76" , 
-  measurementId : "G-93B8DWYBLV" 
+  apiKey : process.env.REACT_APP_APIKEY , 
+  authDomain :  process.env.REACT_APP_AUTHDOMAIN, 
+  projectId :  process.env.REACT_APP_PROJECTID, 
+  storageBucket :  process.env.REACT_APP_STORAGEBUCKET, 
+  messagingSenderId :  process.env.REACT_APP_MESSAGINGSENDERID, 
+  appId :  process.env.REACT_APP_APPID, 
+  measurementId : process.env.REACT_APP_MEASUREMENTID
 };
 
 // Initialize Firebase
