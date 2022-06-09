@@ -8,6 +8,7 @@ import { LoginPayload,UserState } from "./types-action";
 const initialState: UserState = {
     value: null,
     status: 'idle',
+    forgot : ''
 };
 // Async function with database
 export const LoginAsync = createAsyncThunk(
@@ -28,6 +29,9 @@ export const userSlice = createSlice({
         state.value = action.payload;
         localStorage.setItem('user',JSON.stringify(action.payload))
       },
+      setForgotEmail : (state,action:PayloadAction<string>)=>{
+        state.forgot = action.payload;
+      }
     },
     // Handle async action
     extraReducers: (builder) => {
@@ -50,9 +54,10 @@ export const userSlice = createSlice({
     },
   });
 
-  export const { updateUser } = userSlice.actions;
+  export const { updateUser,setForgotEmail } = userSlice.actions;
 
   export const selectUser = (state: RootState) => state.user.value;
+  export const forgotEmail = (state: RootState) => state.user.forgot;
   export const selectUserStatus = (state: RootState) => state.user.status;
 
   export default userSlice.reducer;

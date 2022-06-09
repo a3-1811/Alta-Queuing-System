@@ -51,7 +51,7 @@ const Login = () => {
   
   return (
     <React.Fragment>
-      <Layout className="h-screen">
+      <Layout className="h-screen bg-primary-light-gray">
         <Content className="w-[592px]">
           <div className="flex justify-center items-center w-full bg-primary-light-gray">
             <div className="flex flex-col justify-center items-center w-[400px]">

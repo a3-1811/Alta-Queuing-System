@@ -27,6 +27,7 @@ import ServiceServices from "../../../db/services/service.services";
 import IService from "../../../db/types/service.type";
 import DeviceServices from "../../../db/services/device.services";
 import IDevice from "../../../db/types/device.type";
+import moment from 'moment-timezone';
 
 ChartJS.register(
   ArcElement,
@@ -313,7 +314,7 @@ function Dashboard() {
             <div className='flex justify-between items-center w-full'>
               <div className='mb-2'>
               <h3 className='font-bold text-xl'>Bảng thống kê theo ngày</h3>
-              <p className='text-sm text-gray-400'>Tháng 11/2021</p>
+              <p className='text-sm text-gray-400'>{filter === 'day' || filter === 'week' ? moment(dateSelected).format('[Tháng] MM/YYYY') : moment(dateSelected).format('[Năm] YYYY')}</p>
               </div>
               <div className='selectBox flex justify-center items-center gap-x-3'>
                 <span className='font-bold text-sm'>Xem theo</span>
